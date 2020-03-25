@@ -58,11 +58,33 @@
         </div>
       </div>
 
-      <div class="img img-right">
+      <div class="img">
         <img data-aos="fade-left"
             data-aos-duration="1000" 
             src="../assets/01.jpg" width="400px" alt />
       </div>
+    </div>
+
+    <div class="home__page">
+        <div class="img" data-aos="fade-right"
+            data-aos-duration="1000">
+            <img src="../assets/02.jpg" width="500px" alt="">
+        </div>
+
+        <div class="article-bar">
+            <div class="article-bar__title">
+                Nam nec efficitur nulla
+            </div>
+
+            <div class="article-bar__text">
+                Aliquam nec tortor vitae est tincidunt dignissim quis vel lorem. Suspendisse finibus tortor at ipsum lobortis egestas. Aliquam convallis est mauris, quis pulvinar lorem vestibulum ac. Sed nec luctus dolor, vitae mattis sapien. Nunc ante elit, tincidunt vel nibh eu, facilisis pellentesque nulla. Proin accumsan risus et massa ornare, at porta purus consectetur. Sed diam elit, tempor quis augue non, faucibus scelerisque libero.
+            </div>
+        </div>
+
+        <div class="img img-flexend" data-aos="fade-left"
+            data-aos-duration="1000">
+            <img src="../assets/03.jpg" width="500px" alt="">
+        </div>
     </div>
   </div>
 </template>
@@ -151,10 +173,13 @@ a {
     display: flex;
 
     .img {
-      &-right {
         margin-left: 100px;
         margin-right: 100px;
-      }
+
+        &-flexend{
+            align-self: flex-end;
+        }
+
     }
 
     .article {
@@ -177,6 +202,25 @@ a {
         text-align: right;
       }
     }
+
+    .article-bar {
+        margin: 30px -200px;
+        padding: 30px;
+        z-index: 1;
+        color: white;
+        background:#42b983;
+        border-radius: 20px 0 20px 0;
+
+        &__title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        &__text {
+            line-height: 1.3em;
+        }
+    }
+
   }
 }
 </style>

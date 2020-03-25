@@ -38,7 +38,7 @@ export default {
 
 .navbar {
     background: white;
-    z-index: 1;
+    z-index: 2;
     position: fixed; 
     width: 100vw; 
     font-size: 0.8em;
