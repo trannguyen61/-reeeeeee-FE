@@ -4,6 +4,14 @@
 
     <div class="home__body">
       <div class="btn-group">
+        <div class="btn-group__form">
+          <label for="emailInput"></label>
+          <input type="email" class="form-control" id="emailInput">
+
+          <label for="passwordInput"></label>
+          <input type="password" class="form-control" id="passwordInput">
+        </div>
+
         <router-link to="/login" class="btn-group__link">LOG IN</router-link>
 
         <router-link to="/signup" class="btn-group__link btn-group__link--filled">SIGN UP</router-link>
@@ -133,12 +141,27 @@ a {
 
     .btn-group {
       margin-bottom: 30px;
-      margin-left: 300px;
+      // margin-left: 300px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
 
+      &__form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        
+        .form-control {
+          height: 30px;
+          margin: 10px 0 10px 50px;
+          padding: 0 20px;
+          border: solid 1.5px #42b983;
+          border-radius: 20px;
+        }
+      }
+
       &__link {
+        margin-left: 350px;
         margin-bottom: 15px;
         height: 35px;
         padding: 0 15px;

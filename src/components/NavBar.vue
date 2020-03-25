@@ -21,7 +21,7 @@
 
             <li class="navbar__btn">
                 <router-link to="/">
-                    LOG IN
+                    SIGN UP
                 </router-link>
             </li>
       </ul>
