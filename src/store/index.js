@@ -5,7 +5,29 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {},
+  getters: {},
   mutations: {},
-  actions: {},
+  actions: {
+    userLogin({commit}, {email, password}) {
+      //placeholder
+      //axios
+      // send {email, password}
+      // receive {token} || {error}
+
+      return new Promise((resolve, reject) => {
+        if (email && password) resolve()
+        else commit(reject())
+      })
+
+    },
+
+    userSignup({commit}, {email, password}) {
+      //placeholder
+      return new Promise((resolve, reject) => {
+        if (email && password) resolve()
+        else commit(reject())
+      })
+    }
+  },
   modules: {}
 });

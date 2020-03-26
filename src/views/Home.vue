@@ -4,15 +4,37 @@
 
     <div class="home__body">
       <div class="btn-group">
-        <div class="btn-group__form">
+        <div class="form">
+          <small class="form__text text-danger" v-show="errorMessage !== ''">{{errorMessage}}</small>
+
           <label for="emailInput"></label>
-          <input type="email" class="form-control" id="emailInput">
+          <input
+            v-model="email"
+            type="email"
+            class="form__control"
+            :class="{'border-danger': !validEmail() && email!=''}"
+            id="emailInput"
+            placeholder="Email"
+          />
 
           <label for="passwordInput"></label>
-          <input type="password" class="form-control" id="passwordInput">
+          <input
+            v-model="password"
+            type="password"
+            class="form__control"
+            :class="{'border-danger': (!validPassword(password) && password!='')}"
+            id="passwordInput"
+            placeholder="Password"
+          />
         </div>
 
-        <router-link to="/login" class="btn-group__link">LOG IN</router-link>
+        <!-- <router-link
+          to="/"
+          :disabled="!validEmail() || !validPassword(password)"
+          class="btn-group__link"
+          @click.native="clickLogin({email, password})"
+        >LOG IN</router-link> -->
+        <button class="btn-group__link" @click.prevent="clickLogin({email, password})">LOG IN</button>
 
         <router-link to="/signup" class="btn-group__link btn-group__link--filled">SIGN UP</router-link>
       </div>
@@ -48,9 +70,7 @@
     </div>
 
     <div class="home__page">
-      <div class="article"
-      data-aos="fade-right"
-            data-aos-duration="1000" >
+      <div class="article" data-aos="fade-right" data-aos-duration="1000">
         <div class="article__title">Donec lobortis condimentum</div>
 
         <div class="article__text">
@@ -67,183 +87,68 @@
       </div>
 
       <div class="img">
-        <img data-aos="fade-left"
-            data-aos-duration="1000" 
-            src="../assets/01.jpg" width="400px" alt />
+        <img data-aos="fade-left" data-aos-duration="1000" src="../assets/01.jpg" width="400px" alt />
       </div>
     </div>
 
     <div class="home__page">
-        <div class="img" data-aos="fade-right"
-            data-aos-duration="1000">
-            <img src="../assets/02.jpg" width="500px" alt="">
-        </div>
+      <div class="img" data-aos="fade-right" data-aos-duration="1000">
+        <img src="../assets/02.jpg" width="500px" alt />
+      </div>
 
-        <div class="article-bar">
-            <div class="article-bar__title">
-                Nam nec efficitur nulla
-            </div>
+      <div class="article-bar">
+        <div class="article-bar__title">Nam nec efficitur nulla</div>
 
-            <div class="article-bar__text">
-                Aliquam nec tortor vitae est tincidunt dignissim quis vel lorem. Suspendisse finibus tortor at ipsum lobortis egestas. Aliquam convallis est mauris, quis pulvinar lorem vestibulum ac. Sed nec luctus dolor, vitae mattis sapien. Nunc ante elit, tincidunt vel nibh eu, facilisis pellentesque nulla. Proin accumsan risus et massa ornare, at porta purus consectetur. Sed diam elit, tempor quis augue non, faucibus scelerisque libero.
-            </div>
-        </div>
+        <div
+          class="article-bar__text"
+        >Aliquam nec tortor vitae est tincidunt dignissim quis vel lorem. Suspendisse finibus tortor at ipsum lobortis egestas. Aliquam convallis est mauris, quis pulvinar lorem vestibulum ac. Sed nec luctus dolor, vitae mattis sapien. Nunc ante elit, tincidunt vel nibh eu, facilisis pellentesque nulla. Proin accumsan risus et massa ornare, at porta purus consectetur. Sed diam elit, tempor quis augue non, faucibus scelerisque libero.</div>
+      </div>
 
-        <div class="img img-flexend" data-aos="fade-left"
-            data-aos-duration="1000">
-            <img src="../assets/03.jpg" width="500px" alt="">
-        </div>
+      <div class="img img-flexend" data-aos="fade-left" data-aos-duration="1000">
+        <img src="../assets/03.jpg" width="500px" alt />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from "../components/NavBar";
+import validator from "validator";
 
 export default {
   components: {
     NavBar
+  },
+  data() {
+    return {
+      email: "",
+      password: "",
+      errorMessage: ""
+    };
+  },
+  methods: {
+    validEmail() {
+      return validator.isEmail(this.email);
+    },
+    validPassword(p) {
+      return p.length >= 6;
+    },
+    clickLogin({email, password}) {
+      //placeholder
+      //dispatch to store
+      console.log('HERE')
+      this.errorMessage = "";
+      this.$store
+        .dispatch("userLogin", {
+          email,
+          password
+        })
+        .then(() => {console.log('DISPATCHED')})
+        .catch(e => (this.errorMessage = e || "Login failed"));
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-a {
-  font-weight: bold;
-  color: #42b983;
-  text-decoration: none;
-}
-
-.home {
-  &__body {
-    display: flex;
-    // flex-direction: row-reverse;
-    margin-top: 80px;
-
-    .article {
-      margin: 25px 100px 30px 50px;
-      width: 40%;
-      text-align: left;
-      padding-left: 50px;
-      border-left: solid 1px;
-
-      &__title {
-          color: #42b983;
-        font-size: 4em;
-        margin: 20px 0 20px 0;
-      }
-
-      &__text {
-        margin: 15px 0;
-        line-height: 1.5em;
-      }
-    }
-
-    .btn-group {
-      margin-bottom: 30px;
-      // margin-left: 300px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-
-      &__form {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-        
-        .form-control {
-          height: 30px;
-          margin: 10px 0 10px 50px;
-          padding: 0 20px;
-          border: solid 1.5px #42b983;
-          border-radius: 20px;
-        }
-      }
-
-      &__link {
-        margin-left: 350px;
-        margin-bottom: 15px;
-        height: 35px;
-        padding: 0 15px;
-        border: #42b983 solid 1px;
-        border-radius: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &--filled {
-          background: #42b983;
-          color: white;
-        }
-      }
-    }
-  }
-
-  &__media {
-    margin-top: 5px;
-    a {
-      margin: 0 15px;
-    }
-  }
-
-  &__arrow {
-    margin-top: 40px;
-  }
-
-  &__page {
-    margin-top: 120px;
-    margin-bottom: 40px;
-    display: flex;
-
-    .img {
-        margin-left: 100px;
-        margin-right: 100px;
-
-        &-flexend{
-            align-self: flex-end;
-        }
-
-    }
-
-    .article {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-end;
-      margin-left: 150px;
-      width: 40%;
-
-      &__title {
-          color: #42b983;
-        margin-top: 30px;
-        margin-bottom: 30px;
-        font-size: 2em;
-      }
-
-      &__text {
-        line-height: 1.5em;
-        text-align: right;
-      }
-    }
-
-    .article-bar {
-        margin: 30px -200px;
-        padding: 30px;
-        z-index: 1;
-        color: white;
-        background:#42b983;
-        border-radius: 20px 0 20px 0;
-
-        &__title {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-
-        &__text {
-            line-height: 1.3em;
-        }
-    }
-
-  }
-}
 </style>
