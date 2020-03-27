@@ -7,7 +7,6 @@
         <div class="form">
           <small class="form__text text-danger" v-show="errorMessage !== ''">{{errorMessage}}</small>
 
-          <label for="emailInput"></label>
           <input
             v-model="email"
             type="email"
@@ -17,7 +16,6 @@
             placeholder="Email"
           />
 
-          <label for="passwordInput"></label>
           <input
             v-model="password"
             type="password"

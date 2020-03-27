@@ -252,7 +252,7 @@ input:focus, button:focus {
   // display: flex;
   // margin-top: 130px;
   width: 40%;
-  margin: 110px auto 30px auto;
+  margin: 110px 0 30px 0;
   padding: 40px 30px;
   background: $main-green;
   color: white;
@@ -301,6 +301,11 @@ input:focus, button:focus {
   }
 }
 
+hr {
+  border: solid 1px white;
+  width: 70%;
+}
+
 .card {
   border: solid 1px $main-green;
   padding: 30px;
@@ -309,7 +314,7 @@ input:focus, button:focus {
   margin-bottom: 20px;
 
   hr {
-    border: solid 1px $main-green;
+    border: $main-green;
     width: 70%;
   }
 

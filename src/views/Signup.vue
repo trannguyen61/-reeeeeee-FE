@@ -2,8 +2,9 @@
   <div>
     <navBar />
 
-    <div class="body-container form form-bar">
-      <div class="form__title">
+    <div class="body-container">
+      <div class="form form-bar">
+<div class="form__title">
         <h4>JOIN US!</h4>
       </div>
 
@@ -45,6 +46,8 @@
       <button class="btn-group__link" @click.prevent="clickSignup({email, password})">SIGN UP</button>
 
       </div>
+      </div>
+      
     </div>
   </div>
 </template>
