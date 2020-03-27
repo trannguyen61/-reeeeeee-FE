@@ -61,6 +61,10 @@ export default {
     return {
       email: "",
       password: "",
+      name: "",
+      phone: "",
+      dob: "",
+      identity: "",
       errorMessage: ""
     }
   },

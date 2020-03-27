@@ -92,7 +92,7 @@
     </div>
 
     <div class="home__page">
-      <div class="img" data-aos="fade-right" data-aos-duration="1000">
+      <div class="img" data-aos="fade-right" data-aos-duration="2000">
         <img src="../assets/02.jpg" width="500px" alt />
       </div>
 

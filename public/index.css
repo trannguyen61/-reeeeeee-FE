@@ -30,6 +30,7 @@ input:focus, button:focus {
 .body-container {
   margin-top: 100px;
   display: flex;
+  justify-content: space-evenly;
 }
 
 .text-danger {
@@ -262,4 +263,58 @@ input:focus, button:focus {
 .form-bar .btn-group__link {
   margin-top: 30px;
   margin-bottom: 0;
+}
+
+.list-card {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-card label {
+  position: relative;
+  margin: 10px auto 10px 20px;
+  color: #42b983;
+  font-weight: bold;
+}
+
+.list-card .btn-group__link {
+  margin: 0 0 0 10px;
+  width: 10%;
+}
+
+.list-card .form__control {
+  width: 70%;
+}
+
+.list-card__search-bar {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.card {
+  border: solid 1px #42b983;
+  padding: 30px;
+  border-radius: 0 20px 0 20px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.card hr {
+  border: solid 1px #42b983;
+  width: 70%;
+}
+
+.card__title {
+  font-size: 1.3em;
+  color: #42b983;
+  margin-bottom: 10px;
+}
+
+.card__section {
+  margin-top: 10px;
+}
+
+.card__section__title {
+  margin-bottom: 5px;
 }
