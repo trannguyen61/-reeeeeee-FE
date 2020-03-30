@@ -1,7 +1,5 @@
 <template>
   <div class="home">
-    <navBar />
-
     <div class="home__body">
       <div class="btn-group">
         <div class="form">
@@ -25,13 +23,6 @@
             placeholder="Password"
           />
         </div>
-
-        <!-- <router-link
-          to="/"
-          :disabled="!validEmail() || !validPassword(password)"
-          class="btn-group__link"
-          @click.native="clickLogin({email, password})"
-        >LOG IN</router-link> -->
         <button class="btn-group__link" @click.prevent="clickLogin({email, password})">LOG IN</button>
 
         <router-link to="/signup" class="btn-group__link btn-group__link--filled">SIGN UP</router-link>
@@ -110,12 +101,10 @@
 </template>
 
 <script>
-import NavBar from "../components/NavBar";
 import validator from "validator";
 
 export default {
   components: {
-    NavBar
   },
   data() {
     return {

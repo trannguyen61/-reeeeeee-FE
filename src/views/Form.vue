@@ -1,7 +1,5 @@
 <template>
   <div>
-    <navBar />
-
     <div class="body-container">
       <div class="form form-bar">
         <div class="form__title">
@@ -44,12 +42,10 @@
 </template>
 
 <script>
-import NavBar from "../components/NavBar";
 import Card from "../components/Card";
 
 export default {
   components: {
-    NavBar,
     Card
   },
   data() {
@@ -77,7 +73,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-bar {
-  margin: 0;
-}
+
 </style>

@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home"
 
 Vue.use(VueRouter);
+//set up quyen` doctor o BeforeEnter hook
+//if store.doctor => import component doctor
 
 const routes = [
   {

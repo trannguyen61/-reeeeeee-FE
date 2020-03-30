@@ -15,6 +15,15 @@
   box-sizing: border-box;
 }
 
+.fadeUp-enter, .fadeUp-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.fadeUp-enter-active, .fadeUp-leave-active {
+  transition: opacity 0.5s, transform 0.5s;
+}
+
 a, button {
   background: white;
   font-weight: bold;
@@ -35,6 +44,10 @@ input:focus, button:focus {
 
 .text-danger {
   color: red;
+}
+
+.btn-danger {
+  border: solid 1px red !important;
 }
 
 .form {
@@ -244,7 +257,7 @@ input:focus, button:focus {
 
 .form-bar {
   width: 40%;
-  margin: 110px 0 30px 0;
+  margin: 0 0 30px 0;
   padding: 40px 30px;
   background: #42b983;
   color: white;
@@ -322,4 +335,14 @@ hr {
 
 .card__section__title {
   margin-bottom: 5px;
+}
+
+.btn-group--horizontal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-group--horizontal .btn-group__link {
+  margin: 0;
 }

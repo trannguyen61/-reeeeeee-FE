@@ -1,6 +1,5 @@
 <template>
   <div>
-    <navBar />
 
     <div class="body-container">
       <div class="form form-bar">
@@ -53,12 +52,10 @@
 </template>
 
 <script>
-import NavBar from "../components/NavBar";
 import validator from 'validator'
 
 export default {
   components: {
-    NavBar
   },
   data() {
     return {

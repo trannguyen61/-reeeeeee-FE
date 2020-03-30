@@ -1,6 +1,5 @@
 <template>
   <div>
-    <navBar />
 
     <div class="body-container">
       <div class="form form-bar">
@@ -12,10 +11,10 @@
           <hr noshade />
         </header>
 
-        <div class="card__section">
-          <div class="card__section__title">Patient's name:</div>
+        <div class="card__section" v-for="(value, name) in propList" :key="name">
+          <div class="card__section__title">{{name}}:</div>
 
-          <div class="card__section__text">this is a name</div>
+          <div class="card__section__text">{{value}}</div>
         </div>
       </div>
 
@@ -42,26 +41,27 @@
 </template>
 
 <script>
-import NavBar from "../components/NavBar";
 import Card from "../components/Card";
 
 export default {
   components: {
-    NavBar,
     Card
   },
   data() {
-      return {
-
+    return {
+      propList: {
+        Patient: "ABC",
+        Doctor: "XYZ",
+        Diagnosis: "",
+        Medecine: "",
+        "Re-examination time": ""
       }
+    };
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.form-bar {
-  margin: 0;
-}
 
 hr {
   margin: 0 auto 20px auto;

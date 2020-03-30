@@ -15,11 +15,25 @@
               Không hát thêm một lời
           </div>
       </div>
+
+      <!-- If store.doctor -->
+      <!-- <div class="btn-group--horizontal" v-if="1">
+          <button type="submit" class="btn-group__link" @click.prevent="clickBtn('accept')">ACCEPT</button>
+            <button type="submit" class="btn-group__link text-danger btn-danger" @click.prevent="clickBtn('decline')">DECLINE</button>
+
+      </div> -->
   </div>
 </template>
 
 <script>
 export default {
+
+    methods: {
+        // clickBtn(condition) {
+        //     if (condition === 'accept') condition = 'accept'
+        //     if (condition === 'decline') condition = 'decline'
+        // }
+    }
 
 }
 </script>

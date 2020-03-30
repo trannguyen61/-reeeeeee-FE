@@ -19,8 +19,9 @@
                 </router-link>
             </li>
 
+            <!-- if user is valid, this btn turn to Sign out -->
             <li class="navbar__btn">
-                <router-link to="/">
+                <router-link to="/signup">
                     SIGN UP
                 </router-link>
             </li>
