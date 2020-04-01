@@ -2,7 +2,7 @@
   <div>
 
     <div class="body-container">
-      <div class="form form-bar">
+      <div class="form form--bar">
         <header>
           <div class="form__title">
             <h4>PRESCRIPTION</h4>
@@ -27,9 +27,9 @@
         <input v-model="time" type="date" class="form__control" id="timeInput" />
 
 <!-- Add @click here -->
-        <div class="btn-group">
+        <div class="btn-group mb-0">
           <button
-            class="btn-group__link"
+            class="btn-group__link mt-30 mb-0"
           >SUBMIT</button>
         </div>
       </div>

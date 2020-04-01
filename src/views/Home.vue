@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="home__body">
+    <div class="body-container body-container--mt-80">
       <div class="btn-group">
         <div class="form">
           <small class="form__text text-danger" v-show="errorMessage !== ''">{{errorMessage}}</small>
@@ -8,7 +8,7 @@
           <input
             v-model="email"
             type="email"
-            class="form__control"
+            class="form__control form__control--ml50"
             :class="{'border-danger': !validEmail() && email!=''}"
             id="emailInput"
             placeholder="Email"
@@ -17,7 +17,7 @@
           <input
             v-model="password"
             type="password"
-            class="form__control"
+            class="form__control form__control--ml50"
             :class="{'border-danger': (!validPassword(password) && password!='')}"
             id="passwordInput"
             placeholder="Password"
@@ -28,13 +28,13 @@
         <router-link to="/signup" class="btn-group__link btn-group__link--filled">SIGN UP</router-link>
       </div>
 
-      <div class="article">
-        <div class="article__title">
+      <div class="article article--left">
+        <div class="article__title article__title--big">
           <strong>Lorem Ipsum</strong>
         </div>
 
         <div
-          class="article__text"
+          class="article__text article__text--margin"
         >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris egestas est a risus elementum tempus. Proin varius et massa non dictum. Etiam consectetur neque condimentum elit gravida hendrerit. Vivamus venenatis, nulla eget vulputate iaculis, lectus orci feugiat sapien, eu consequat leo lacus nec velit. Vivamus ex neque, volutpat id nisl quis, commodo mollis arcu. Nullam nec velit cursus, placerat est sed, volutpat lectus. Vestibulum sollicitudin quam lectus, ac efficitur arcu tempor in. Pellentesque molestie mattis diam, sit amet gravida est dictum in.</div>
       </div>
     </div>
@@ -59,10 +59,10 @@
     </div>
 
     <div class="home__page">
-      <div class="article" data-aos="fade-right" data-aos-duration="1000">
-        <div class="article__title">Donec lobortis condimentum</div>
+      <div class="article article--column" data-aos="fade-right" data-aos-duration="1000">
+        <div class="article__title article__title--smol">Donec lobortis condimentum</div>
 
-        <div class="article__text">
+        <div class="article__text article__text--right">
           Donec lobortis condimentum purus non efficitur.
           <br />Mauris rutrum elit at elit sagittis bibendum.
           <br />Phasellus ac urna a tortor congue pulvinar sit amet a tortor.

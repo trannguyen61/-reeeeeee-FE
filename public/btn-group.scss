@@ -1,0 +1,35 @@
+.btn-group {
+  margin-bottom: 30px;
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  &__link {
+    margin-left: 350px;
+    margin-bottom: 15px;
+    height: 35px;
+    padding: 0 15px;
+    border: $main-green solid 1px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--filled {
+      background: $main-green;
+      color: white;
+    }
+  }
+
+  &--horizontal {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    .btn-group__link {
+      margin: 0;
+    }
+  }
+  //fix this btn-group__link
+}

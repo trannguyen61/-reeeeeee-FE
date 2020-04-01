@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="body-container">
-      <div class="form form-bar">
+      <div class="form form--bar mb-0">
         <div class="form__title">
           <h4>APPOINTMENT FORM</h4>
         </div>
@@ -15,9 +15,9 @@
         <label for="descriptionInput">Description</label>
         <input v-model="description" type="text" class="form__control" id="descriptionInput" />
 
-        <div class="btn-group">
+        <div class="btn-group mb-0">
           <button
-            class="btn-group__link"
+            class="btn-group__link mt-30 mb-0"
             @click.prevent="submitForm(clinic, date, description)"
           >SUBMIT</button>
         </div>

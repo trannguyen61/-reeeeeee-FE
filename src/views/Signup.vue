@@ -2,7 +2,7 @@
   <div>
 
     <div class="body-container">
-      <div class="form form-bar">
+      <div class="form form--bar">
 <div class="form__title">
         <h4>JOIN US!</h4>
       </div>
@@ -41,8 +41,8 @@
       <label for="identityInput">Identity card serial</label>
       <input v-model="identity" type="text" maxlength="12" class="form__control" id="identityInput" placeholder="Identity serial"/>
 
-      <div class="btn-group">
-      <button class="btn-group__link" @click.prevent="clickSignup({email, password})">SIGN UP</button>
+      <div class="btn-group mb-0">
+      <button class="btn-group__link mt-30 mb-0" @click.prevent="clickSignup({email, password})">SIGN UP</button>
 
       </div>
       </div>

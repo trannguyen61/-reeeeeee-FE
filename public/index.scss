@@ -17,16 +17,8 @@ $main-green: #42b983;
   box-sizing: border-box;
 }
 
-.fadeUp-enter, .fadeUp-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.fadeUp-enter-active, .fadeUp-leave-active {
-  transition: opacity 0.5s, transform 0.5s;
-}
-
-a, button {
+a,
+button {
   background: white;
   font-weight: bold;
   color: $main-green;
@@ -34,41 +26,265 @@ a, button {
   cursor: pointer;
 }
 
-input:focus, button:focus {
+hr {
+  border: solid 1px white;
+  width: 70%;
+}
+
+input:focus,
+button:focus {
   outline: 0;
 }
 
+//body wrapper w/ margin top to avoid navbar
 .body-container {
   margin-top: 100px;
-  display: flex; 
+  display: flex;
   justify-content: space-evenly;
+
+  &--mt-80 {
+    margin-top: 80px;
+  }
 }
 
-.text-danger {
-  color: red;
+//BUNDLE 
+//article
+.article {
+  width: 40%;
+
+  //main page text
+  &--left {
+    margin: 25px 100px 30px 50px;
+    text-align: left;
+    padding-left: 50px;
+    border-left: solid 1px;
+  }
+
+  //page text
+  &--column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-left: 150px;
+  }
+
+  &__title {
+    color: $main-green;
+    font-size: 4em;
+
+    //main page title
+    &--big {
+      font-size: 4em;
+      margin: 20px 0 20px 0;
+    }
+
+    //page title
+    &--smol {
+      font-size: 2em;
+      margin: 30px 0 30px 0;
+    }
+  }
+
+  &__text {
+    line-height: 1.5em;
+
+    //page text
+    &--right {
+      text-align: right;
+    }
+
+    //main page text
+    &--margin {
+      margin: 15px 0;
+    }
+  }
 }
 
-.btn-danger {
-  border: solid 1px red !important;
+//home page only
+.home {
+  &__media {
+    margin-top: 5px;
+    a {
+      margin: 0 15px;
+    }
+  }
+
+  &__arrow {
+    margin-top: 40px;
+  }
+
+  &__page {
+    margin-top: 120px;
+    margin-bottom: 40px;
+    display: flex;
+
+    .img {
+      margin-left: 100px;
+      margin-right: 100px;
+
+      &-flexend {
+        align-self: flex-end;
+      }
+    }
+  }
 }
 
+.list-card {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    position: relative;
+    margin: 10px auto 10px 20px;
+    color: $main-green;
+    font-weight: bold;
+  }
+
+  //shouldn't have done this
+  .btn-group {
+    &__link {
+      margin: 0 0 0 10px;
+      width: 10%;
+    }
+  }
+
+  //shouldn't have done this
+  .form__control {
+    width: 70%;
+  }
+
+  &__search-bar {
+    display: flex;
+    margin-bottom: 30px;
+  }
+}
+
+//BUNDLE
+//article-bar
+.article-bar {
+  margin: 30px -200px;
+  padding: 30px;
+  z-index: 1;
+  color: white;
+  background: $main-green;
+  border-radius: 20px 0 20px 0;
+
+  &__title {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+
+  &__text {
+    line-height: 1.3em;
+  }
+}
+
+//BUNDLE
+//btn-group
+
+.btn-group {
+  margin-bottom: 30px;
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  &__link {
+    margin-left: 350px;
+    margin-bottom: 15px;
+    height: 35px;
+    padding: 0 15px;
+    border: $main-green solid 1px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--filled {
+      background: $main-green;
+      color: white;
+    }
+  }
+
+  &--horizontal {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    .btn-group__link {
+      margin: 0;
+    }
+  }
+}
+
+//BUNDLE
+//card
+.card {
+  border: solid 1px $main-green;
+  padding: 30px;
+  border-radius: 0 20px 0 20px;
+  text-align: left;
+  margin-bottom: 20px;
+
+  hr {
+    border: $main-green;
+    width: 70%;
+  }
+
+  &__title {
+    font-size: 1.3em;
+    color: $main-green;
+    margin-bottom: 10px;
+  }
+
+  &__section {
+    margin-top: 10px;
+
+    &__title {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+//BUNDLE
+//form
 .form {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+
+  &--bar {
+    width: 40%;
+    margin: 0 0 30px 0;
+    padding: 40px 30px;
+    background: $main-green;
+    color: white;
+    border-radius: 30px 0 30px 0;
+  }
+
+  &__title {
+    font-size: 2em;
+    margin-bottom: 30px;
+  }
 
   &__control {
     height: 30px;
     padding: 0 20px;
     border: solid 1.5px $main-green;
     border-radius: 20px;
+
+    &--ml50 {
+      margin: 10px 0 10px 50px;
+    }
   }
 
   &__text {
-      font-size: 0.8em;
-      color: red;
-      margin-bottom: -20px;
-      align-self: flex-end;
+    font-size: 0.8em;
+    color: red;
+    margin-bottom: -20px;
+    align-self: flex-end;
   }
 
   label {
@@ -77,10 +293,8 @@ input:focus, button:focus {
   }
 }
 
-.border-danger {
-  border-color: red;
-}
-
+//BUNDLE
+//navbar
 .navbar {
   background: white;
   z-index: 2;
@@ -136,222 +350,44 @@ input:focus, button:focus {
   }
 }
 
-.btn-group {
-  margin-bottom: 30px;
-  margin-left: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+//IMPORTANT
 
-  .form {
-    &__control {
-      height: 30px;
-      margin: 10px 0 10px 50px;
-    }
-  }
-
-  &__link {
-    margin-left: 350px;
-    margin-bottom: 15px;
-    height: 35px;
-    padding: 0 15px;
-    border: $main-green solid 1px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &--filled {
-      background: $main-green;
-      color: white;
-    }
-  }
+.ml-0 {
+  margin-left: 0;
 }
 
-.home {
-  &__body {
-    display: flex;
-    // flex-direction: row-reverse;
-    margin-top: 80px;
-
-    .article {
-      margin: 25px 100px 30px 50px;
-      width: 40%;
-      text-align: left;
-      padding-left: 50px;
-      border-left: solid 1px;
-
-      &__title {
-        color: $main-green;
-        font-size: 4em;
-        margin: 20px 0 20px 0;
-      }
-
-      &__text {
-        margin: 15px 0;
-        line-height: 1.5em;
-      }
-    }
-    
-  }
-
-  &__media {
-    margin-top: 5px;
-    a {
-      margin: 0 15px;
-    }
-  }
-
-  &__arrow {
-    margin-top: 40px;
-  }
-
-  &__page {
-    margin-top: 120px;
-    margin-bottom: 40px;
-    display: flex;
-
-    .img {
-      margin-left: 100px;
-      margin-right: 100px;
-
-      &-flexend {
-        align-self: flex-end;
-      }
-    }
-
-    .article {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-end;
-      margin-left: 150px;
-      width: 40%;
-
-      &__title {
-        color: $main-green;
-        margin-top: 30px;
-        margin-bottom: 30px;
-        font-size: 2em;
-      }
-
-      &__text {
-        line-height: 1.5em;
-        text-align: right;
-      }
-    }
-
-    .article-bar {
-      margin: 30px -200px;
-      padding: 30px;
-      z-index: 1;
-      color: white;
-      background: $main-green;
-      border-radius: 20px 0 20px 0;
-
-      &__title {
-        font-size: 1.5em;
-        margin-bottom: 20px;
-      }
-
-      &__text {
-        line-height: 1.3em;
-      }
-    }
-  }
+.mb-0 {
+  margin-bottom: 0;
 }
 
-.form-bar {
-  // display: flex;
-  // margin-top: 130px;
-  width: 40%;
-  margin: 0 0 30px 0;
-  padding: 40px 30px;
-  background: $main-green;
-  color: white;
-  border-radius: 30px 0 30px 0;
-
-  .form__title {
-    font-size: 2em;
-    margin-bottom: 30px;
-  }
-  .btn-group {
-    margin-bottom: 0;
-
-    &__link {
-      margin-top: 30px;
-      margin-bottom: 0;
-    }
-  }
+.mr-0 {
+  margin-right: 0;
 }
 
-.list-card {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-
-  label {
-    position: relative;
-    margin: 10px auto 10px 20px;
-    color: $main-green;
-    font-weight: bold;
-  }
-
-  .btn-group {
-    &__link {
-      margin: 0 0 0 10px;
-      width: 10%;
-    }
-  }
-
-  .form__control {
-    width: 70%;
-  }
-
-  &__search-bar {
-    display: flex;
-    margin-bottom: 30px;
-  }
+.mt-30 {
+  margin-top: 30px;
 }
 
-hr {
-  border: solid 1px white;
-  width: 70%;
+.text-danger {
+  color: red;
 }
 
-.card {
-  border: solid 1px $main-green;
-  padding: 30px;
-  border-radius: 0 20px 0 20px;
-  text-align: left;
-  margin-bottom: 20px;
-
-  hr {
-    border: $main-green;
-    width: 70%;
-  }
-
-  &__title {
-    font-size: 1.3em;
-    color: $main-green;
-    margin-bottom: 10px;
-  }
-
-  &__section {
-    margin-top: 10px;
-
-    &__title {
-      margin-bottom: 5px;
-    }
-  }
+.btn-danger {
+  border: solid 1px red !important;
 }
 
-.btn-group--horizontal {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+.border-danger {
+  border-color: red;
+}
 
-  .btn-group__link {
-    margin: 0;
-  }
+//ANIMATION
+.fadeUp-enter,
+.fadeUp-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.fadeUp-enter-active,
+.fadeUp-leave-active {
+  transition: opacity 0.5s, transform 0.5s;
 }

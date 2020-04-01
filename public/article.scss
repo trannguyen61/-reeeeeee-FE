@@ -1,0 +1,52 @@
+.article {
+  width: 40%;
+
+  //main page text
+  &--left {
+    margin: 25px 100px 30px 50px;
+    text-align: left;
+    padding-left: 50px;
+    border-left: solid 1px;
+  }
+
+  //page text
+  &--column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-left: 150px;
+  }
+    
+
+    &__title {
+      color: $main-green;
+      font-size: 4em;
+      
+      //main page title
+      &--big {
+        font-size: 4em;
+        margin: 20px 0 20px 0;
+      }
+
+        //page title
+      &--smol {
+        font-size: 2em;
+        margin: 30px 0 30px 0;
+      }
+    }
+
+    &__text {
+      line-height: 1.5em;
+
+      //page text
+      &--right {
+        text-align: right;
+      }
+
+      //main page text
+      &--margin {
+        margin: 15px 0;
+      }
+    }
+  }

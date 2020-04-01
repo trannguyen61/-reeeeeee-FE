@@ -2,7 +2,7 @@
   <div>
 
     <div class="body-container">
-      <div class="form form-bar">
+      <div class="form form--bar">
         <header>
           <div class="form__title">
             <h4>PRESCRIPTION</h4>
