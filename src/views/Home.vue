@@ -23,7 +23,8 @@
             placeholder="Password"
           />
         </div>
-        <button class="btn-group__link" @click.prevent="clickLogin({email, password})">LOG IN</button>
+        <button class="btn-group__link" @click.prevent="clickLogin({email, password})"
+        :disabled="!validEmail() || !validPassword(password)">LOG IN</button>
 
         <router-link to="/signup" class="btn-group__link btn-group__link--filled">SIGN UP</router-link>
       </div>
@@ -104,8 +105,7 @@
 import validator from "validator";
 
 export default {
-  components: {
-  },
+  components: {},
   data() {
     return {
       email: "",
@@ -120,18 +120,14 @@ export default {
     validPassword(p) {
       return p.length >= 6;
     },
-    clickLogin({email, password}) {
-      //placeholder
-      //dispatch to store
-      console.log('HERE')
-      this.errorMessage = "";
-      this.$store
-        .dispatch("userLogin", {
-          email,
-          password
-        })
-        .then(() => {console.log('DISPATCHED')})
-        .catch(e => (this.errorMessage = e || "Login failed"));
+    clickLogin({ email, password }) {
+      Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
+
+      this.$store.dispatch('userLogin', {email, password})
+      .then((response) => {
+        console.log(response)
+      })
+      .catch(e => this.errorMessage = e.error || 'Login falied.')
     }
   }
 };

@@ -24,6 +24,12 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  border: 1px solid #ccc;
+  background-color: #ccc;
+  color: #666;
+}
+
 hr {
   border: solid 1px white;
   width: 70%;

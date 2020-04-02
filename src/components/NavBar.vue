@@ -20,9 +20,15 @@
             </li>
 
             <!-- if user is valid, this btn turn to Sign out -->
-            <li class="navbar__btn">
+            <li class="navbar__btn" v-if="!$store.getters.getToken">
                 <router-link to="/signup">
                     SIGN UP
+                </router-link>
+            </li>
+
+            <li class="navbar__btn" v-else>
+                <router-link to="/" @click.native="$store.dispatch('userSignout')">
+                    SIGN OUT
                 </router-link>
             </li>
       </ul>
@@ -31,7 +37,6 @@
 
 <script>
 export default {
-
 }
 </script>
 

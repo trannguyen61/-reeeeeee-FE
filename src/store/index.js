@@ -1,33 +1,32 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+//modules
+import userModule from './modules/user'
+import formModule from './modules/form'
+import prescriptionModule from './modules/prescription'
+
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {
-    userLogin({commit}, {email, password}) {
-      //placeholder
-      //axios
-      // send {email, password}
-      // receive {token} || {error}
-
-      return new Promise((resolve, reject) => {
-        if (email && password) resolve()
-        else commit(reject())
-      })
-
-    },
-
-    userSignup({commit}, {email, password}) {
-      //placeholder
-      return new Promise((resolve, reject) => {
-        if (email && password) resolve()
-        else commit(reject())
-      })
-    }
+  state: {
+    isLoading: false,
   },
-  modules: {}
+  getters: {
+    getLoading(state) {
+      return state.isLoading
+    },
+  },
+  mutations: {
+    'TOGGLE_LOADING'(state) {
+      state.isLoading = !state.isLoading
+    },
+  },
+  actions: {
+
+  },
+  modules: {
+    userModule, formModule, prescriptionModule
+  }
 });

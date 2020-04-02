@@ -36,14 +36,15 @@
       <input v-model="phone" type="text" maxlength="12" class="form__control" id="phoneInput" placeholder="Phone number"/>
 
       <label for="dobInput">Date of birth</label>
-      <input v-model="date" type="date" class="form__control" id="dobInput"/>
+      <input v-model="dob" type="date" class="form__control" id="dobInput"/>
 
       <label for="identityInput">Identity card serial</label>
       <input v-model="identity" type="text" maxlength="12" class="form__control" id="identityInput" placeholder="Identity serial"/>
 
       <div class="btn-group mb-0">
-      <button class="btn-group__link mt-30 mb-0" @click.prevent="clickSignup({email, password})">SIGN UP</button>
-
+      <button class="btn-group__link mt-30 mb-0" @click.prevent="clickSignup({email, password})"
+        :disabled="!validEmail() || !validPassword(password)"
+        >SIGN UP</button>
       </div>
       </div>
       
@@ -76,11 +77,13 @@ export default {
       return p.length >= 6;
     },
     clickSignup({email, password}) {
-      //placeholder
-      this.errorMessage = ''
+      Object.keys(this.$data).forEach(key => this.$data[key] = '')
+
       this.$store.dispatch('userSignup', {email, password})
-      .then(() => {})
-      .catch(e => this.errorMessage = e || 'Signup falied.')
+      .then((response) => {
+        console.log(response)
+      })
+      .catch(e => this.errorMessage = e.error || 'Signup falied.')
     },
   }
 };
