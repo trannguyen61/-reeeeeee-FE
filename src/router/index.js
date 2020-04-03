@@ -16,7 +16,13 @@ const routes = [
     path: "/signup",
     name: "Signup",
     component: () => 
-      import(/* webpackChunkName: "signup" */ "../views/Signup.vue")
+      import(/* webpackChunkName: "signup" */ "../views/Signup.vue"),
+    beforeEnter: (to, from, next) => {
+      const auth =  store.getters.getToken
+        if (!auth) next()
+        else next({name: 'Home'})
+    }
+  
   },
   {
     path: "/form",
@@ -27,7 +33,6 @@ const routes = [
         //with mapactions like dis mapActions("namespace", ["actionMethod"])
         //or mapActions({'increment': 'namespace/actionMethod'})
         const role = store.getters.getRole
-        console.log('STORE ' + role)
         if (role === 'doctor') return import(/* webpackChunkName: "formAccept" */'../views/FormAccept.vue')
         else return import(/* webpackChunkName: "form" */'../views/Form.vue')  
       },
