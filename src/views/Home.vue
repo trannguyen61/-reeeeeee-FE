@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <div class="body-container body-container--mt-80">
-      <div class="btn-group">
+      <!-- Hide login form when user is already logged in -->
+      <div class="btn-group" :style="{visibility: $store.getters.getToken ? 'hidden' : 'visible'}">
         <div class="form">
           <small class="form__text text-danger" v-show="errorMessage !== ''">{{errorMessage}}</small>
 
@@ -110,8 +111,14 @@ export default {
     return {
       email: "",
       password: "",
-      errorMessage: ""
+      errorMessage: "",
     };
+  },
+  watch: {
+    '$route' (to, from){
+      console.log("ROUTE")
+      if (to && from && this.$route.query.showLogin) this.errorMessage = 'You must first log in.'        
+    }
   },
   methods: {
     validEmail() {
@@ -134,4 +141,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.form__text {
+  margin-bottom: 10px;
+}
 </style>

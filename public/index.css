@@ -50,6 +50,26 @@ button:focus {
   margin-top: 80px;
 }
 
+.select-bar {
+  margin: 0 0 10px 0;
+  border: 1px solid #e5e5e5;
+  border-radius: 20px;
+  padding: 8px;
+  width: 70%;
+}
+
+.select-bar select {
+  font-size: 14px;
+  border: none;
+  width: 100%;
+  background: white;
+  padding-left: 5px;
+}
+
+.select-bar select:focus {
+  outline-width: 0;
+}
+
 .article {
   width: 40%;
 }
@@ -234,6 +254,10 @@ button:focus {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+}
+
+.form--not-stretch {
+  align-self: flex-start;
 }
 
 .form--bar {

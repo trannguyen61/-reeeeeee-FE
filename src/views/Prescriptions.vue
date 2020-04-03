@@ -1,8 +1,7 @@
 <template>
   <div>
-
     <div class="body-container">
-      <div class="form form--bar">
+      <div class="form form--bar form--not-stretch">
         <header>
           <div class="form__title">
             <h4>PRESCRIPTION</h4>
@@ -29,12 +28,12 @@
             id="prescriptionSearch"
           />
 
-          <button class="btn-group__link btn-group__link--filled" type="button" id="searchButton">
+          <button class="btn-group__link btn-group__link--filled" type="button" id="searchButton" @click="search()">
             <i class="fas fa-search"></i>
           </button>
         </div>
 
-        <card />
+        <card class="card-item" v-for="result in searchResult" :key="result.prescription" @click.native="show(result)"/>
       </div>
     </div>
   </div>
@@ -42,6 +41,7 @@
 
 <script>
 import Card from "../components/Card";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -55,14 +55,33 @@ export default {
         Diagnosis: "",
         Medecine: "",
         "Re-examination time": ""
-      }
+      },
+      prescriptionSearch: "",
+      searchResult: []
     };
+  },
+  methods: {
+    ...mapActions(["getPrescription"]),
+    search() {
+      this.getPrescription(this.prescriptionSearch)
+        .then(response => {
+          console.log(this.prescriptionSearch)
+          console.log(response);
+          this.searchResult = response;
+        })
+        .catch(e => console.log(e));
+
+      this.prescriptionSearch = ''
+    }, 
+    show(pres) {
+      console.log('CLICKED')
+      this.propList['Patient'] = pres.prescription
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 hr {
   margin: 0 auto 20px auto;
 }
@@ -79,4 +98,9 @@ hr {
     }
   }
 }
+
+.card-item:hover {
+  cursor: pointer;
+}
+
 </style>

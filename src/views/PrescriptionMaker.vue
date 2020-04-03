@@ -2,7 +2,7 @@
   <div>
 
     <div class="body-container">
-      <div class="form form--bar">
+      <div class="form form--bar form--not-stretch">
         <header>
           <div class="form__title">
             <h4>PRESCRIPTION</h4>
@@ -69,5 +69,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+hr {
+  margin: 0 auto 20px auto;
+}
 </style>

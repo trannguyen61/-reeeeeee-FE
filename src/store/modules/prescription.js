@@ -12,33 +12,39 @@ export default {
     },
     actions: {
         postPrescription({ commit }, prescription) {
-            commit('TOGGLE_LOADING', { root: true })
-            prescription.post(prescription)
-                .then(response => {
-                    if (response.code === 200) resolve(response.prescription)
-                    else throw new Error(response)
-                })
-                .catch(e => {
-                    reject(e.error)
-                })
-                .finally(() => {
-                    commit('TOGGLE_LOADING', { root: true })
-                })
+            return new Promise((resolve, reject) => {
+                commit('TOGGLE_LOADING', { root: true })
+                prescriptionAxios.post(prescription)
+                    .then(response => {
+                        if (response.code === 200) resolve(response.prescription)
+                        else throw new Error(response)
+                    })
+                    .catch(e => {
+                        reject(e.error)
+                    })
+                    .finally(() => {
+                        commit('TOGGLE_LOADING', { root: true })
+                    })
+            })
+            
         },
 
         getPrescription({ commit }) {
-            commit('TOGGLE_LOADING', { root: true })
-            formAxios.searchForm(date)
-                .then(response => {
-                    if (response.code === 200) resolve(response.prescriptions)
-                    else throw new Error(response)
-                })
-                .catch(e => {
-                    reject(e.error)
-                })
-                .finally(() => {
-                    commit('TOGGLE_LOADING', { root: true })
-                })
+            return new Promise((resolve, reject) => {
+                commit('TOGGLE_LOADING', { root: true })
+                prescriptionAxios.get()
+                    .then(response => {
+                        if (response.code === 200) resolve(response.prescriptions)
+                        else throw new Error(response)
+                    })
+                    .catch(e => {
+                        reject(e.error)
+                    })
+                    .finally(() => {
+                        commit('TOGGLE_LOADING', { root: true })
+                    })
+            })
+            
         }
     }
 }

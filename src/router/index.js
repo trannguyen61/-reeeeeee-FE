@@ -2,9 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home"
 
+import store from '../store/index'
+
 Vue.use(VueRouter);
-//set up quyen` doctor o BeforeEnter hook
-//if store.doctor => import component doctor
 
 const routes = [
   {
@@ -22,23 +22,33 @@ const routes = [
     path: "/form",
     name: "Form",
     component: () => 
-      import(/* webpackChunkName: "form" */'../views/Form.vue')
+      {
+        //try using namespace on modules
+        //with mapactions like dis mapActions("namespace", ["actionMethod"])
+        //or mapActions({'increment': 'namespace/actionMethod'})
+        const role = store.getters.getRole
+        console.log('STORE ' + role)
+        if (role === 'doctor') return import(/* webpackChunkName: "formAccept" */'../views/FormAccept.vue')
+        else return import(/* webpackChunkName: "form" */'../views/Form.vue')  
+      },
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getToken) next()
+      else next({name: 'Home', query: { showLogin: true }})
+    }
   },
   {
     path: '/prescriptions',
     name: 'Prescriptions',
-    component: () =>
-      import(/* webpackChunkName: "prescriptions" */'../views/Prescriptions.vue')
+    component: () => {
+      if (store.getters.getRole === 'doctor') return import(/* webpackChunkName: "prescriptionMaker" */'../views/PrescriptionMaker.vue')
+      else return import(/* webpackChunkName: "prescriptions" */'../views/Prescriptions.vue')
+
+    },
+    beforeEnter: (to, from, next) => {
+      if (store.getters.getToken) next()
+      else next({name: 'Home', query: { showLogin: true }})
+    }
   }
-//   {
-//     path: "/about",
-//     name: "About",
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () =>
-//       import(/* webpackChunkName: "about" */ "../views/About.vue")
-//   }
 ];
 
 const router = new VueRouter({

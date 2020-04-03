@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="body-container">
-      <div class="form form--bar mb-0">
+      <div class="form form--bar form--not-stretch mb-0">
         <div class="form__title">
           <h4>APPOINTMENT FORM</h4>
         </div>
@@ -13,7 +13,7 @@
         <input v-model="date" type="date" class="form__control" id="dateInput" />
 
         <label for="descriptionInput">Description</label>
-        <input v-model="description" type="text" class="form__control" id="descriptionInput" />
+        <input v-model="description" type="text" class="form__control" id="descriptionInput" height="100"/>
 
         <div class="btn-group mb-0">
           <button
@@ -24,18 +24,33 @@
       </div>
 
       <div class="list-card">
-        <label for="clinicSearch">Search for clinic</label>
+        <label for="clinicSearch">Search for clinic/form</label>
+
+        <div class="select-bar">
+        <select v-model="searchSelect" name="searchSelect" id="searchSelect">
+          <option value="clinic">Clinic</option>
+          <option value="form">Form</option>
+        </select>
+
+
+        </div>
 
         <div class="list-card__search-bar">
-          <input v-model="clinicSearch" type="text" class="form__control" id="clinicSearch" />
+          <input v-if="searchSelect === 'form'" v-model="formSearch" type="date" class="form__control" id="formSearch" />
 
-          <button class="btn-group__link btn-group__link--filled" type="button" id="searchButton"
-            @click.prevent="search">
+          <input v-else v-model="clinicSearch" type="text" class="form__control" id="clinicSearch" />
+
+          <button
+            class="btn-group__link btn-group__link--filled"
+            type="button"
+            id="searchButton"
+            @click.prevent="search()"
+          >
             <i class="fas fa-search"></i>
           </button>
         </div>
 
-        <card />
+        <card v-for="result in searchResult" :key="result.clinic"/>
       </div>
     </div>
   </div>
@@ -43,6 +58,7 @@
 
 <script>
 import Card from "../components/Card";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -53,25 +69,48 @@ export default {
       clinic: "",
       date: "",
       description: "",
-      clinicSearch: ""
+      clinicSearch: "",
+      formSearch: "",
+      searchSelect: "",
+      searchResult: []
     };
   },
   methods: {
+    ...mapActions(["postForm", "searchClinic", "searchForm"]),
     submitForm(clinic, date, description) {
-      //placeholder
-      clinic = "";
-      date = "";
-      this.description = description;
+      Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
+      this.postForm({ clinic, date, description })
+        .then(response => console.log(response))
+        .catch(e => console.log(e));
     },
     search() {
-        //placeholder
-        //axios //an array of matched clinics
-        //use v-for to render cards
+      //placeholder
+      //axios //an array of matched clinics
+      //use v-for to render cards
+      if (this.searchSelect === 'clinic') {
+        this.searchClinic(this.clinicSearch)
+          .then(response => {
+            console.log(response)
+            this.searchResult = response
+          })
+          .catch(e => console.log(e));
+        this.searchSelect = ''
+        this.clinicSearch = ''
+      } else {
+        this.searchForm(this.formSearch)
+          .then(response => {
+            console.log(response)
+            this.searchResult = response
+          })
+          .catch(e => console.log(e));
+        this.searchSelect = ''
+        this.formSearch = ''
+        console.log("RES " + this.searchResult)
+      }
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 </style>
