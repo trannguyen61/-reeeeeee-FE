@@ -76,7 +76,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["postForm", "searchClinic", "searchForm"]),
+    ...mapActions(["postForm", "searchData"]),
     submitForm(clinic, date, description) {
       Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
       this.postForm({ clinic, date, description })
@@ -87,26 +87,36 @@ export default {
       //placeholder
       //axios //an array of matched clinics
       //use v-for to render cards
-      if (this.searchSelect === 'clinic') {
-        this.searchClinic(this.clinicSearch)
-          .then(response => {
-            console.log(response)
-            this.searchResult = response
-          })
-          .catch(e => console.log(e));
-        this.searchSelect = ''
-        this.clinicSearch = ''
-      } else {
-        this.searchForm(this.formSearch)
-          .then(response => {
-            console.log(response)
-            this.searchResult = response
-          })
-          .catch(e => console.log(e));
-        this.searchSelect = ''
-        this.formSearch = ''
-        console.log("RES " + this.searchResult)
-      }
+
+      // if (this.searchSelect === 'clinic') {
+      //   this.searchClinic(this.clinicSearch)
+      //     .then(response => {
+      //       console.log(response)
+      //       this.searchResult = response
+      //     })
+      //     .catch(e => console.log(e));
+      //   this.searchSelect = ''
+      //   this.clinicSearch = ''
+      // } else {
+      //   this.searchForm(this.formSearch)
+      //     .then(response => {
+      //       console.log(response)
+      //       this.searchResult = response
+      //     })
+      //     .catch(e => console.log(e));
+      //   this.searchSelect = ''
+      //   this.formSearch = ''
+      //   console.log("RES " + this.searchResult)
+      // }
+
+      this.searchData({search: this.searchSelect, data: this.formSearch || this.clinicSearch})
+        .then(response => {
+          console.log(response)
+          this.searchResult = response
+        }).catch(e => console.log(e))
+      this.searchSelect = ''
+      this.formSearch = ''
+      this.clinicSearch = ''
     }
   }
 };

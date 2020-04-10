@@ -82,6 +82,7 @@ export default {
       this.$store.dispatch('userSignup', {email, password})
       .then((response) => {
         console.log(response)
+        this.$router.push({name: 'Home'})
       })
       .catch(e => this.errorMessage = e.error || 'Signup falied.')
     },

@@ -47,23 +47,5 @@ export default {
             
         },
 
-        
-        searchPatient({ commit }, email) {
-            return new Promise((resolve, reject) => {
-                commit('TOGGLE_LOADING', { root: true })
-                prescriptionAxios.searchPatient(email)
-                    .then(response => {
-                        if (response.code === 200) resolve(response.patient)
-                        else throw new Error(response)
-                    })
-                    .catch(e => {
-                        reject(e.error)
-                    })
-                    .finally(() => {
-                        commit('TOGGLE_LOADING', { root: true })
-                    })
-            })
-            
-        },
     }
 }

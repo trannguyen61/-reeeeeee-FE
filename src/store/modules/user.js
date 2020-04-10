@@ -1,4 +1,5 @@
-import userAxios from '../../../test/user'
+// import userAxios from '../../../test/user'
+import axios from 'axios'
 
 export default {
     state: {
@@ -22,27 +23,42 @@ export default {
         }
     },
     actions: {
+        /* 
+        res form:
+
+        data: {code: 200, token: "..."}
+        status: 200
+        statusText: "OK"
+        headers: {content-length: "190", content-type: "application/json; charset=utf-8"}
+        config: {url: "http://localhost:3000/api/signup", method: "post", data: "{"email":"patient@sample.com","name":"Tesing","phone_number":"12121","password":"1212121"}", headers: {…}, transformRequest: Array(1), …}
+        request: XMLHttpRequest {readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, onreadystatechange: ƒ, …}
+        
+        */
         userLogin({ commit }, { email, password }) {
 
             return new Promise((resolve, reject) => {
-                commit('TOGGLE_LOADING', {root: true})
-                userAxios.signup({ email, password })
-                    .then((response) => {
-                        if (response.code === 200) {
-                            const token = response.token
-                            const role = response.role
-                            commit('SET_TOKEN', token)
-                            commit('SET_ROLE', role)
-                            localStorage.setItem('access_token', token)
-                            resolve('LOGIN SUCCEEDED')
-                        } else throw new Error(response.error)
-                    })
+                commit('TOGGLE_LOADING', { root: true })
+                //userAxios.signup({ email, password })
+                axios.post('http://localhost:3000/api/login', {
+                    email, userPassword: password
+                }).then((response) => {
+                    if (response.status === 200) {
+                        console.log(response)
+                        const token = response.data.token
+                        const role = response.data.role
+                        commit('SET_TOKEN', token)
+                        commit('SET_ROLE', role)
+                        localStorage.setItem('access_token', token)
+                        resolve('LOGIN SUCCEEDED')
+                    } else throw new Error(response)
+                })
                     .catch(e => {
+                        console.log(e)
                         localStorage.removeItem('access_token')
                         reject(e)
                     })
                     .finally(() => {
-                        commit('TOGGLE_LOADING', {root: true})
+                        commit('TOGGLE_LOADING', { root: true })
                     })
             })
 
@@ -51,24 +67,29 @@ export default {
         userSignup({ commit }, { email, password }) {
             //placeholder
             return new Promise((resolve, reject) => {
-                commit('TOGGLE_LOADING', {root: true})
-                userAxios.signup({ email, password })
-                    .then((response) => {
-                        if (response.code === 200) {
-                            const token = response.token
-                            const role = response.role
-                            commit('SET_TOKEN', token)
-                            commit('SET_ROLE', role)
-                            localStorage.setItem('access_token', token)
-                            resolve('SIGNUP SUCCEEDED')
-                        } else throw new Error(response)
-                    })
+                commit('TOGGLE_LOADING', { root: true })
+                // userAxios.signup({ email, password })
+                axios.post('http://localhost:3000/api/signup', {
+                    email, userName: "Tesing", phoneNumber: "12121", userPassword: password
+                }).then((response) => {
+                    console.log(response)
+                    if (response.status === 200) {
+                        // console.log(response)
+                        const token = response.data.token
+                        const role = response.data.role
+                        commit('SET_TOKEN', token)
+                        commit('SET_ROLE', role)
+                        localStorage.setItem('access_token', token)
+                        resolve('SIGNUP SUCCEEDED')
+                    } else throw new Error(response.statusText)
+                })
                     .catch(e => {
+                        console.log(JSON.stringify(e))
                         localStorage.removeItem('access_token')
                         reject(e)
                     })
                     .finally(() => {
-                        commit('TOGGLE_LOADING', {root: true})
+                        commit('TOGGLE_LOADING', { root: true })
                     })
             })
         },
