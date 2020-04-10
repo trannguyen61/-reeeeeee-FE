@@ -1,13 +1,13 @@
 <template>
   <div class="card">
-    <div class="card__title">(tôi) đi trú đông</div>
+    <div class="card__title">{{ data.clinicID || data.formID ? 'ID: ' + (data.clinicID ? data.clinicID : data.formID)  : 'Email: ' }}</div>
 
     <hr noshade />
 
     <div class="card__section">
-      <div class="card__section__title">Nốt hôm nay rồi thôi, nốt bài này và tôi</div>
+      <div class="card__section__title">{{ data.clinicName ? 'Name: ' + data.clinicName : data.clinic ? 'ClinicID: ' + data.clinic : 'Email ' }}</div>
 
-      <div class="card__section__text">Không hát thêm một lời</div>
+      <div class="card__section__text">Description: {{ data.description }}</div>
     </div>
 
     <!-- If store.doctor -->
@@ -24,6 +24,7 @@
 
 <script>
 export default {
+  props: ['data'],
   methods: {
     async acceptBtn(condition) {
       try {

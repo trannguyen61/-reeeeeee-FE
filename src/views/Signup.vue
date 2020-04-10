@@ -42,7 +42,7 @@
       <input v-model="identity" type="text" maxlength="12" class="form__control" id="identityInput" placeholder="Identity serial"/>
 
       <div class="btn-group mb-0">
-      <button class="btn-group__link mt-30 mb-0" @click.prevent="clickSignup({email, password})"
+      <button class="btn-group__link mt-30 mb-0" @click.prevent="clickSignup()"
         :disabled="!validEmail() || !validPassword(password)"
         >SIGN UP</button>
       </div>
@@ -76,10 +76,18 @@ export default {
     validPassword(p) {
       return p.length >= 6;
     },
-    clickSignup({email, password}) {
+    clickSignup() {
+      const payload = {
+        email: this.email, 
+        userName: this.name, 
+        phoneNumber: this.phone, 
+        userPassword: this.password, 
+        dateOfBirth: this.dob, 
+        idCardSerial: this.identity
+      }
       Object.keys(this.$data).forEach(key => this.$data[key] = '')
 
-      this.$store.dispatch('userSignup', {email, password})
+      this.$store.dispatch('userSignup', payload)
       .then((response) => {
         console.log(response)
         this.$router.push({name: 'Home'})

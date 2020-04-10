@@ -50,7 +50,7 @@
           </button>
         </div>
 
-        <card v-for="result in searchResult" :key="result.clinic"/>
+        <card v-for="result in searchResult" :key="result.clinicID || result.formID" :data="result"/>
       </div>
     </div>
   </div>
@@ -78,7 +78,9 @@ export default {
   methods: {
     ...mapActions(["postForm", "searchData"]),
     submitForm(clinic, date, description) {
-      Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
+      Object.keys(this.$data).forEach(key => {
+        if(key !== 'searchResult') this.$data[key] = ""
+      });
       this.postForm({ clinic, date, description })
         .then(response => console.log(response))
         .catch(e => console.log(e));
@@ -87,27 +89,6 @@ export default {
       //placeholder
       //axios //an array of matched clinics
       //use v-for to render cards
-
-      // if (this.searchSelect === 'clinic') {
-      //   this.searchClinic(this.clinicSearch)
-      //     .then(response => {
-      //       console.log(response)
-      //       this.searchResult = response
-      //     })
-      //     .catch(e => console.log(e));
-      //   this.searchSelect = ''
-      //   this.clinicSearch = ''
-      // } else {
-      //   this.searchForm(this.formSearch)
-      //     .then(response => {
-      //       console.log(response)
-      //       this.searchResult = response
-      //     })
-      //     .catch(e => console.log(e));
-      //   this.searchSelect = ''
-      //   this.formSearch = ''
-      //   console.log("RES " + this.searchResult)
-      // }
 
       this.searchData({search: this.searchSelect, data: this.formSearch || this.clinicSearch})
         .then(response => {

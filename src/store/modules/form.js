@@ -18,7 +18,7 @@ export default {
                 axios.get('http://localhost:3000/api/form')
                 .then(response => {
                     if (response.data.code === 200) resolve(response.data.forms)
-                    else throw new Error(response)
+                    else throw new Error(response.data.err)
                 }).catch(e => reject(e))
             })
         },
@@ -33,7 +33,7 @@ export default {
                     description: payload.description})
                     .then(response => {
                         if (response.data.code === 200) resolve()
-                        else throw new Error(response)
+                        else throw new Error(response.data.err)
                     })
                     .catch(e => {
                         reject(e)
@@ -109,10 +109,10 @@ export default {
                 })
                     .then(response => {
                         if (response.data.code === 200) resolve('CHECK FORM SUCCEEDED')
-                        else throw new Error(response)
+                        else throw new Error(response.data.err)
                     })
                     .catch(e => {
-                        reject(e.error)
+                        reject(e)
                     })
                     .finally(() => {
                         commit('TOGGLE_LOADING', { root: true })
@@ -124,17 +124,18 @@ export default {
         searchData({commit}, payload) {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
-                axios.post('http://localhost:3000/api/search', {
+                console.log(payload)
+                axios.post('http://localhost:3000/api/search', null, {
                     params: {
                         search: payload.search,
                         data: payload.data
                     }
                 }).then(response => {
                         if (response.data.code === 200) resolve(response.data.result)
-                        else throw new Error(response)
+                        else throw new Error(response.data.err)
                     })
                     .catch(e => {
-                        reject(e.error)
+                        reject(e)
                     })
                     .finally(() => {
                         commit('TOGGLE_LOADING', { root: true })

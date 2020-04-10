@@ -50,7 +50,7 @@ export default {
                         commit('SET_ROLE', role)
                         localStorage.setItem('access_token', token)
                         resolve('LOGIN SUCCEEDED')
-                    } else throw new Error(response)
+                    } else throw new Error(response.data.err)
                 })
                     .catch(e => {
                         console.log(e)
@@ -64,24 +64,29 @@ export default {
 
         },
 
-        userSignup({ commit }, { email, password }) {
+        userSignup({ commit }, payload) {
             //placeholder
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
                 // userAxios.signup({ email, password })
                 axios.post('http://localhost:3000/api/signup', {
-                    email, userName: "Tesing", phoneNumber: "12121", userPassword: password
+                    email: payload.email, 
+                    userName: payload.userName, 
+                    phoneNumber: payload.phoneNumber, 
+                    userPassword: payload.userPassword, 
+                    dateOfBirth: payload.dateOfBirth, 
+                    idCardSerial: payload.idCardSerial
                 }).then((response) => {
                     console.log(response)
                     if (response.status === 200) {
-                        // console.log(response)
+                        console.log(response.data)
                         const token = response.data.token
                         const role = response.data.role
                         commit('SET_TOKEN', token)
                         commit('SET_ROLE', role)
                         localStorage.setItem('access_token', token)
                         resolve('SIGNUP SUCCEEDED')
-                    } else throw new Error(response.statusText)
+                    } else throw new Error(response.data.err)
                 })
                     .catch(e => {
                         console.log(JSON.stringify(e))
