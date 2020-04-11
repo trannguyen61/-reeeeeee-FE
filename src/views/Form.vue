@@ -6,19 +6,38 @@
           <h4>APPOINTMENT FORM</h4>
         </div>
 
-        <label for="clinicInput">Clinic</label>
-        <input v-model="clinic" type="text" class="form__control" id="clinicInput" />
+        <small class="form__text text-danger" v-show="errorMessage !== ''">{{errorMessage}}</small>
 
-        <label for="dateInput">Checkup date</label>
-        <input v-model="date" type="date" class="form__control" id="dateInput" />
+        <label for="clinicInput">Clinic ID *</label>
+        <input
+          v-model="clinic"
+          type="text"
+          class="form__control"
+          id="clinicInput"
+        />
+
+        <label for="dateInput">Checkup date *</label>
+        <input
+          v-model="date"
+          type="datetime-local"
+          class="form__control"
+          id="dateInput"
+        />
 
         <label for="descriptionInput">Description</label>
-        <input v-model="description" type="text" class="form__control" id="descriptionInput" height="100"/>
+        <input
+          v-model="description"
+          type="text"
+          class="form__control"
+          id="descriptionInput"
+          height="100"
+        />
 
         <div class="btn-group mb-0">
           <button
             class="btn-group__link mt-30 mb-0"
-            @click.prevent="submitForm(clinic, date, description)"
+            @click.prevent="submitForm(clinic, date, description)" 
+            :disabled="!clinic && !date"
           >SUBMIT</button>
         </div>
       </div>
@@ -27,16 +46,20 @@
         <label for="clinicSearch">Search for clinic/form</label>
 
         <div class="select-bar">
-        <select v-model="searchSelect" name="searchSelect" id="searchSelect">
-          <option value="clinic">Clinic</option>
-          <option value="form">Form</option>
-        </select>
-
-
+          <select v-model="searchSelect" name="searchSelect" id="searchSelect">
+            <option value="clinic">Clinic</option>
+            <option value="form">Form</option>
+          </select>
         </div>
 
         <div class="list-card__search-bar">
-          <input v-if="searchSelect === 'form'" v-model="formSearch" type="date" class="form__control" id="formSearch" />
+          <input
+            v-if="searchSelect === 'form'"
+            v-model="formSearch"
+            type="date"
+            class="form__control"
+            id="formSearch"
+          />
 
           <input v-else v-model="clinicSearch" type="text" class="form__control" id="clinicSearch" />
 
@@ -50,7 +73,11 @@
           </button>
         </div>
 
-        <card v-for="result in searchResult" :key="result.clinicID || result.formID" :data="result"/>
+        <card
+          v-for="result in searchResult"
+          :key="result.clinicID || result.formID"
+          :data="result"
+        />
       </div>
     </div>
   </div>
@@ -72,32 +99,43 @@ export default {
       clinicSearch: "",
       formSearch: "",
       searchSelect: "",
-      searchResult: []
+      searchResult: [],
+      errorMessage: ""
     };
   },
   methods: {
     ...mapActions(["postForm", "searchData"]),
     submitForm(clinic, date, description) {
       Object.keys(this.$data).forEach(key => {
-        if(key !== 'searchResult') this.$data[key] = ""
+        if (key !== "searchResult") this.$data[key] = "";
       });
-      this.postForm({ clinic, date, description })
+      this.postForm({ clinic, checkUpDate: date, description })
         .then(response => console.log(response))
-        .catch(e => console.log(e));
+        .catch(e => {
+          this.errorMessage = e || 'Submit form failed. Please try again.';
+          console.log(e);
+        });
     },
     search() {
       //placeholder
       //axios //an array of matched clinics
       //use v-for to render cards
 
-      this.searchData({search: this.searchSelect, data: this.formSearch || this.clinicSearch})
+      this.searchData({
+        search: this.searchSelect,
+        data: this.formSearch || this.clinicSearch
+      })
         .then(response => {
-          console.log(response)
-          this.searchResult = response
-        }).catch(e => console.log(e))
-      this.searchSelect = ''
-      this.formSearch = ''
-      this.clinicSearch = ''
+          console.log(response);
+          this.searchResult = response;
+        })
+        .catch(e => {
+          this.errorMessage = e || 'Fetch data failed. Please try again.';
+          console.log(e);
+        });
+      this.searchSelect = "";
+      this.formSearch = "";
+      this.clinicSearch = "";
     }
   }
 };

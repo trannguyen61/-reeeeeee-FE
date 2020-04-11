@@ -1,36 +1,51 @@
 // import formAxios from '../../../test/form'
-import axios from 'axios'
+import axios from 'axios' 
 
 export default {
     state: {
-
+        forms: []
     },
     getters: {
-
+        getForm(state) {
+            return state.forms
+        }
     },
     mutations: {
-
+        'SET_FORM'(state, forms) {
+            state.forms = forms
+        }
     },
     actions: {
-        getForm({commit}) {
+        getForm({commit, rootGetters}) {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
-                axios.get('http://localhost:3000/api/form')
+                axios.get('http://localhost:3000/api/form', {
+                    headers: {
+                        'Authorization': `Bearer ${rootGetters.getTokenCredential}`
+                    }
+                })
                 .then(response => {
-                    if (response.data.code === 200) resolve(response.data.forms)
+                    console.log(response)
+                    if (response.data.code === 200) {
+                        commit('SET_FORM', response.data.forms)
+                        resolve()
+                    }
                     else throw new Error(response.data.err)
                 }).catch(e => reject(e))
             })
         },
 
-        postForm({ commit }, payload) {
+        postForm({ commit, rootGetters }, payload) {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
                 axios.post('http://localhost:3000/api/form', 
                     {patient: payload.patient, 
                     clinic: payload.clinic, 
                     checkUpDate: payload.checkUpDate, 
-                    description: payload.description})
+                    description: payload.description}, {
+                        headers: {
+                            'Authorization': `Bearer ${rootGetters.getTokenCredential}`
+                        }})
                     .then(response => {
                         if (response.data.code === 200) resolve()
                         else throw new Error(response.data.err)
@@ -45,68 +60,17 @@ export default {
             
         },
 
-        // searchClinic({ commit }, clinic) {
-        //     return new Promise((resolve, reject) => {
-        //         commit('TOGGLE_LOADING', { root: true })
-        //         formAxios.searchClinic(clinic)
-        //             .then(response => {
-        //                 if (response.code === 200) resolve(response.clinics)
-        //                 else throw new Error(response)
-        //             })
-        //             .catch(e => {
-        //                 reject(e.error)
-        //             })
-        //             .finally(() => {
-        //                 commit('TOGGLE_LOADING', { root: true })
-        //             })
-        //     })
-            
-        // },
-
-        // searchForm({ commit }, date) {
-        //     return new Promise((resolve, reject) => {
-        //         commit('TOGGLE_LOADING', { root: true })
-        //         formAxios.searchForm(date)
-        //             .then(response => {
-        //                 if (response.code === 200) resolve(response.forms)
-        //                 else throw new Error(response)
-        //             })
-        //             .catch(e => {
-        //                 reject(e.error)
-        //             })
-        //             .finally(() => {
-        //                 commit('TOGGLE_LOADING', { root: true })
-        //             })
-        //     })
-            
-        // },
-
-        // searchPatient({ commit }, email) {
-        //     return new Promise((resolve, reject) => {
-        //         commit('TOGGLE_LOADING', { root: true })
-        //         prescriptionAxios.searchPatient(email)
-        //             .then(response => {
-        //                 if (response.code === 200) resolve(response.patient)
-        //                 else throw new Error(response)
-        //             })
-        //             .catch(e => {
-        //                 reject(e.error)
-        //             })
-        //             .finally(() => {
-        //                 commit('TOGGLE_LOADING', { root: true })
-        //             })
-        //     })
-            
-        // },
-
-        checkForm({commit}, payload) {
+        checkForm({commit, rootGetters}, payload) {
             //true false value?
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
                 axios.patch('http://localhost:3000/api/form', {
                     formID: payload.formID,
                     value: payload.value
-                })
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${rootGetters.getTokenCredential}`
+                    }})
                     .then(response => {
                         if (response.data.code === 200) resolve('CHECK FORM SUCCEEDED')
                         else throw new Error(response.data.err)
@@ -121,7 +85,7 @@ export default {
             
         },
 
-        searchData({commit}, payload) {
+        searchData({commit, rootGetters}, payload) {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
                 console.log(payload)
@@ -129,7 +93,10 @@ export default {
                     params: {
                         search: payload.search,
                         data: payload.data
-                    }
+                    },
+                        headers: {
+                            'Authorization': `Bearer ${rootGetters.getTokenCredential}`
+                        }
                 }).then(response => {
                         if (response.data.code === 200) resolve(response.data.result)
                         else throw new Error(response.data.err)

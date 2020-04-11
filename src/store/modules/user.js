@@ -12,6 +12,9 @@ export default {
         },
         getToken(state) {
             return state.token !== '' ? true : false
+        },
+        getTokenCredential(state) {
+            return state.token
         }
     },
     mutations: {

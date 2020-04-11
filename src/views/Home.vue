@@ -134,7 +134,7 @@ export default {
       .then((response) => {
         console.log(response)
       })
-      .catch(e => this.errorMessage = e.error || 'Login falied.')
+      .catch(e => this.errorMessage = e || 'Login falied. Please try again.')
     }
   }
 };

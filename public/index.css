@@ -312,7 +312,7 @@ button:focus {
   text-decoration: none;
 }
 
-.navbar a.router-link-exact-active {
+.navbar a.router-link-active {
   color: #42b983;
 }
 

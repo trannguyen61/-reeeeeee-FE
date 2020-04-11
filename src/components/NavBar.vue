@@ -8,13 +8,13 @@
           </li>
 
             <li class="navbar__link">
-                <router-link to="/form">
+                <router-link to="/form" :class="{ 'router-link-active' : $route.path.includes('form')}">
                     FORM
                 </router-link>
             </li>
 
             <li class="navbar__link">
-                <router-link to="/prescriptions">
+                <router-link to="/prescriptions" :class="{'router-link-active': $route.path.includes('prescription')}">
                     PRESCRIPTIONS
                 </router-link>
             </li>

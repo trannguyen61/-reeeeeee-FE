@@ -1,13 +1,15 @@
 <template>
   <div>
-    <div class="body-container">
-      <card v-for="card in cards" :key="card.form" @reloadCards="reloadCards" />
+    <div v-if="dataFetched" class="body-container">
+      <h4 v-if="cards.length === 0">No forms needed to be checked.</h4>
+      <card v-for="card in cards" :key="card.formID" :data="card" @reloadCards="reloadCards" />
     </div>
   </div>
 </template>
 
 <script>
 import Card from "../components/Card";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -15,40 +17,24 @@ export default {
   },
   data() {
     return {
-      cards: []
+      cards: null,
+      dataFetched: false
     };
   },
   created() {
-    //this.$store.dispatch('getForm')
-    console.log("GET FORM");
-    // this.$store.dispatch('searchForm', '2020-01-01')
-    // .then(res => {
-    //     console.log('GET FORM SUCCEEDED')
-    //     this.cards = res})
-    // .catch(e => console.log(e))
-
-    this.$store
-      .dispatch("getForm")
-      .then(res => {
-        console.log("GET FORM SUCCEEDED");
-        this.cards = res;
-      })
-      .catch(e => console.log(e));
+    this.$store.dispatch('getForm').then(() => {
+      this.cards = this.$store.getters.getForm
+      this.dataFetched = true
+      console.log('cards', this.cards)
+    }).catch(e => console.log(e))
   },
   methods: {
+    ...mapActions(["getForm"]),
     reloadCards() {
-
-      // this.$store.dispatch('searchForm', '2020-01-01')
-      // .then(res => this.cards = res)
-      // .catch(e => console.log(e))
-
-      this.$store
-        .dispatch("getForm")
-        .then(res => {
-          console.log("GET FORM SUCCEEDED");
-          this.cards = res;
-        })
-        .catch(e => console.log(e));
+      this.$store.dispatch('getForm').then(() => {
+      this.cards = this.$store.getters.getForm
+      console.log('cards', this.cards)
+    }).catch(e => console.log(e))
     }
   }
 };

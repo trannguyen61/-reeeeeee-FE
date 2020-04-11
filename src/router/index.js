@@ -27,33 +27,48 @@ const routes = [
   {
     path: "/form",
     name: "Form",
-    component: () => 
-      {
-        //try using namespace on modules
-        //with mapactions like dis mapActions("namespace", ["actionMethod"])
-        //or mapActions({'increment': 'namespace/actionMethod'})
-        const role = store.getters.getRole
-        if (role === 'doctor') return import(/* webpackChunkName: "formAccept" */'../views/FormAccept.vue')
-        else return import(/* webpackChunkName: "form" */'../views/Form.vue')  
-      },
     beforeEnter: (to, from, next) => {
-      if (store.getters.getToken) next()
+      if (store.getters.getToken && store.getters.getRole === 'patient') next({name: 'User-Form'})
+      else if (store.getters.getToken && store.getters.getRole === 'doctor') next({name: 'Doctor-Form'})
       else next({name: 'Home', query: { showLogin: true }})
     }
   },
   {
     path: '/prescriptions',
     name: 'Prescriptions',
-    component: () => {
-      if (store.getters.getRole === 'doctor') return import(/* webpackChunkName: "prescriptionMaker" */'../views/PrescriptionMaker.vue')
-      else return import(/* webpackChunkName: "prescriptions" */'../views/Prescriptions.vue')
-
-    },
     beforeEnter: (to, from, next) => {
-      if (store.getters.getToken) next()
+      if (store.getters.getToken && store.getters.getRole === 'patient') next({name: 'User-Pres'})
+      else if (store.getters.getToken && store.getters.getRole === 'doctor') next({name: 'Doctor-Pres'})
       else next({name: 'Home', query: { showLogin: true }})
     }
-  }
+  },
+  ///////////
+  //User Routes
+  //////////
+  {
+    path: '/user/form',
+    name: 'User-Form',
+    component: () => import(/* webpackChunkName: "form" */'../views/Form.vue')
+  },
+  {
+    path: '/user/prescription',
+    name: 'User-Pres',
+    component: () => import(/* webpackChunkName: "prescriptions" */'../views/Prescriptions.vue')
+  },
+  ///////////
+  //Doctor Routes
+  ///////////
+  {
+    path: '/doctor/form',
+    name: 'Doctor-Form',
+    component: () => import(/* webpackChunkName: "formAccept" */'../views/FormAccept.vue')
+  },
+  {
+    path: '/doctor/prescription',
+    name: 'Doctor-Pres',
+    component: () => import(/* webpackChunkName: "prescriptionMaker" */'../views/PrescriptionMaker.vue')
+  },
+  
 ];
 
 const router = new VueRouter({
