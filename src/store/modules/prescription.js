@@ -1,4 +1,7 @@
-import prescriptionAxios from '../../../test/prescription'
+// import prescriptionAxios from '../../../test/prescription'
+import axios from 'axios'
+
+//under development
 
 export default {
     state: {
@@ -14,7 +17,7 @@ export default {
         postPrescription({ commit }, prescription) {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
-                prescriptionAxios.post(prescription)
+                axios.post( `${process.env.VUE_APP_API_URL}` ,prescription)
                     .then(response => {
                         if (response.code === 200) resolve(response.prescription)
                         else throw new Error(response)
@@ -32,7 +35,7 @@ export default {
         getPrescription({ commit }) {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
-                prescriptionAxios.get()
+                axios.get(`${process.env.VUE_APP_API_URL}`)
                     .then(response => {
                         if (response.code === 200) resolve(response.prescriptions)
                         else throw new Error(response)
