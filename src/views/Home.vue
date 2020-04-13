@@ -32,12 +32,15 @@
 
       <div class="article article--left">
         <div class="article__title article__title--big">
-          <strong>Lorem Ipsum</strong>
+          <strong>:reeeeeeee:</strong>
         </div>
 
         <div
           class="article__text article__text--margin"
-        >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris egestas est a risus elementum tempus. Proin varius et massa non dictum. Etiam consectetur neque condimentum elit gravida hendrerit. Vivamus venenatis, nulla eget vulputate iaculis, lectus orci feugiat sapien, eu consequat leo lacus nec velit. Vivamus ex neque, volutpat id nisl quis, commodo mollis arcu. Nullam nec velit cursus, placerat est sed, volutpat lectus. Vestibulum sollicitudin quam lectus, ac efficitur arcu tempor in. Pellentesque molestie mattis diam, sit amet gravida est dictum in.</div>
+        ><i>noun / 'ré / </i><br/>
+        Brought to you by <br/><strong>{ 'Đỗ Nam', 'Nguyễn Ngọc Bảo Trân', 'Đỗ Ngọc Thanh Vân' }</strong>.<br/>
+        Patient sample account: 18020123@vnu.edu.vn - 123456;<br/>Doctor sample account: 18020234@vnu.edu.vn - 1234567. <br/>Use at your own risk.
+        Creating new account is patient account by default. Contact us for more doctor and clinic datas, since no one does this for free, duh. Btw, the reason we named this :reeeee: solely bcus it's a cute emote in our discord channel.</div>
       </div>
     </div>
 
@@ -62,18 +65,18 @@
 
     <div class="home__page">
       <div class="article article--column" data-aos="fade-right" data-aos-duration="1000">
-        <div class="article__title article__title--smol">Donec lobortis condimentum</div>
+        <div class="article__title article__title--smol">Wise words, lol jk just scroll down</div>
 
         <div class="article__text article__text--right">
-          Donec lobortis condimentum purus non efficitur.
-          <br />Mauris rutrum elit at elit sagittis bibendum.
-          <br />Phasellus ac urna a tortor congue pulvinar sit amet a tortor.
+          Powered by Vue and NodeJS. 
+          <br />I actually hate green, but a full-black health-care website is not a good idea imo. Who's gonna sign up for a website that looks like a funeral.
+          <br />These random lines are Lorem ipsum something, idk, I just looked it up and pasted it here. Don't even know their meanings. Don't bother them.
           <br />Sed ultrices ipsum nec velit semper, non viverra risus pulvinar.
           <br />In elementum ex rutrum laoreet condimentum.
           <br />Quisque fermentum arcu id diam mollis, in viverra mauris rhoncus.
           <br />Suspendisse condimentum aliquet nisi pretium finibus.
           <br />Phasellus ac aliquam nisi, non tristique diam.
-          <br />Pellentesque tristique urna eu erat mollis pulvinar.
+          <br />No actually thanks for scrolling this far. Keep going. 
         </div>
       </div>
 
@@ -88,11 +91,11 @@
       </div>
 
       <div class="article-bar">
-        <div class="article-bar__title">Nam nec efficitur nulla</div>
+        <div class="article-bar__title">Features</div>
 
         <div
           class="article-bar__text"
-        >Aliquam nec tortor vitae est tincidunt dignissim quis vel lorem. Suspendisse finibus tortor at ipsum lobortis egestas. Aliquam convallis est mauris, quis pulvinar lorem vestibulum ac. Sed nec luctus dolor, vitae mattis sapien. Nunc ante elit, tincidunt vel nibh eu, facilisis pellentesque nulla. Proin accumsan risus et massa ornare, at porta purus consectetur. Sed diam elit, tempor quis augue non, faucibus scelerisque libero.</div>
+        >You can sign up and log in, yay. Creating account is limited to patients only.<br/><br/>User features: Create checkup-form, search for clinics, search for previous forms; Access to prescriptions that have been made after checkups.<br/><br/>Doctor features: Accept or decline checkup dates; Create prescriptions for patients after checkups, search for patients.</div>
       </div>
 
       <div class="img img-flexend" data-aos="fade-left" data-aos-duration="1000">

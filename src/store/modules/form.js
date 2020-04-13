@@ -19,7 +19,7 @@ export default {
         getForm({commit, rootGetters}) {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
-                axios.get('http://localhost:3000/api/form', {
+                axios.get(`${process.env.VUE_APP_API_URL}/api/form`, {
                     headers: {
                         'Authorization': `Bearer ${rootGetters.getTokenCredential}`
                     }
@@ -38,7 +38,7 @@ export default {
         postForm({ commit, rootGetters }, payload) {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
-                axios.post('http://localhost:3000/api/form', 
+                axios.post(`${process.env.VUE_APP_API_URL}/api/form`, 
                     {patient: payload.patient, 
                     clinic: payload.clinic, 
                     checkUpDate: payload.checkUpDate, 
@@ -64,7 +64,7 @@ export default {
             //true false value?
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
-                axios.patch('http://localhost:3000/api/form', {
+                axios.patch(`${process.env.VUE_APP_API_URL}/api/form`, {
                     formID: payload.formID,
                     value: payload.value
                 }, {
@@ -89,7 +89,7 @@ export default {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
                 console.log(payload)
-                axios.post('http://localhost:3000/api/search', null, {
+                axios.post(`${process.env.VUE_APP_API_URL}/api/search`, null, {
                     params: {
                         search: payload.search,
                         data: payload.data

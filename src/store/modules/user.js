@@ -26,23 +26,12 @@ export default {
         }
     },
     actions: {
-        /* 
-        res form:
-
-        data: {code: 200, token: "..."}
-        status: 200
-        statusText: "OK"
-        headers: {content-length: "190", content-type: "application/json; charset=utf-8"}
-        config: {url: "http://localhost:3000/api/signup", method: "post", data: "{"email":"patient@sample.com","name":"Tesing","phone_number":"12121","password":"1212121"}", headers: {…}, transformRequest: Array(1), …}
-        request: XMLHttpRequest {readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, onreadystatechange: ƒ, …}
-        
-        */
         userLogin({ commit }, { email, password }) {
 
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
                 //userAxios.signup({ email, password })
-                axios.post('http://localhost:3000/api/login', {
+                axios.post(`${process.env.VUE_APP_API_URL}/api/login`, {
                     email, userPassword: password
                 }).then((response) => {
                     if (response.status === 200) {
@@ -72,7 +61,7 @@ export default {
             return new Promise((resolve, reject) => {
                 commit('TOGGLE_LOADING', { root: true })
                 // userAxios.signup({ email, password })
-                axios.post('http://localhost:3000/api/signup', {
+                axios.post(`${process.env.VUE_APP_API_URL}/api/signup`, {
                     email: payload.email, 
                     userName: payload.userName, 
                     phoneNumber: payload.phoneNumber, 
