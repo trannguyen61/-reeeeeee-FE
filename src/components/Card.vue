@@ -63,7 +63,7 @@ export default {
   methods: {
     async acceptBtn(condition) {
       try {
-        const res = await this.$store.dispatch("checkForm", {formID: this.data.formID, value: condition});
+        await this.$store.dispatch("checkForm", {formID: this.data.formID, value: condition});
         this.$emit("reloadCards");
       } catch (e) {
         this.$emit("reloadCards", e)
