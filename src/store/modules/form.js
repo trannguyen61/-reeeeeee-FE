@@ -31,7 +31,9 @@ export default {
                         resolve()
                     }
                     else throw new Error(response.data.err)
-                }).catch(e => reject(e))
+                }).catch(e => reject(e)).finally(() => {
+                    commit('TOGGLE_LOADING', { root: true })
+                })
             })
         },
 
