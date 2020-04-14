@@ -64,11 +64,10 @@ export default {
     async acceptBtn(condition) {
       try {
         const res = await this.$store.dispatch("checkForm", {formID: this.data.formID, value: condition});
-        console.log(res)
-      } catch (e) {
-        console.log(e);
-      } finally {
         this.$emit("reloadCards");
+      } catch (e) {
+        this.$emit("reloadCards", e)
+        console.log(e);
       }
     }
   }

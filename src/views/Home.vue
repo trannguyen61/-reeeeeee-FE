@@ -4,7 +4,7 @@
       <!-- Hide login form when user is already logged in -->
       <div class="btn-group" :style="{visibility: $store.getters.getToken ? 'hidden' : 'visible'}">
         <div class="form">
-          <small class="form__text text-danger" v-show="errorMessage !== ''">{{errorMessage}}</small>
+          <warning :errorMessage="errorMessage"/>
 
           <input
             v-model="email"
@@ -107,9 +107,10 @@
 
 <script>
 import validator from "validator";
+import Warning from '../components/Warning'
 
 export default {
-  components: {},
+  components: { Warning },
   data() {
     return {
       email: "",
@@ -138,9 +139,9 @@ export default {
         console.log(response)
       })
       .catch(e => this.errorMessage = e || 'Login falied. Please try again.')
-    }
-  }
-};
+    },
+}
+}
 </script>
 
 <style lang="scss" scoped>

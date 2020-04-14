@@ -373,6 +373,10 @@ button:focus {
   color: red;
 }
 
+.text-success {
+  color: #42b983;
+}
+
 .btn-danger {
   border: solid 1px red !important;
 }

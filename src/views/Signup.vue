@@ -1,63 +1,75 @@
 <template>
   <div>
-
     <div class="body-container">
       <div class="form form--bar">
-<div class="form__title">
-        <h4>JOIN US!</h4>
+        <div class="form__title">
+          <h4>JOIN US!</h4>
+        </div>
+
+        <warning :errorMessage="errorMessage" />
+        <label for="emailInput">Email *</label>
+        <input
+          v-model="email"
+          type="email"
+          class="form__control"
+          :class="{'border-danger': !validEmail() && email!=''}"
+          id="emailInput"
+          placeholder="Email"
+        />
+
+        <label for="passwordInput">Password *</label>
+        <input
+          v-model="password"
+          type="password"
+          class="form__control"
+          :class="{'border-danger': (!validPassword(password) && password!='')}"
+          id="passwordInput"
+          placeholder="Password must be longer than 6 characters."
+        />
+
+        <label for="nameInput">Name *</label>
+        <input v-model="name" type="text" class="form__control" id="nameInput" placeholder="Name" />
+
+        <label for="phoneInput">Phone number *</label>
+        <input
+          v-model="phone"
+          type="text"
+          maxlength="12"
+          class="form__control"
+          id="phoneInput"
+          placeholder="Phone number"
+        />
+
+        <label for="dobInput">Date of birth</label>
+        <input v-model="dob" type="date" class="form__control" id="dobInput" />
+
+        <label for="identityInput">Identity card serial</label>
+        <input
+          v-model="identity"
+          type="text"
+          maxlength="12"
+          class="form__control"
+          id="identityInput"
+          placeholder="Identity serial"
+        />
+
+        <div class="btn-group mb-0">
+          <button
+            class="btn-group__link mt-30 mb-0"
+            @click.prevent="clickSignup()"
+            :disabled="!validEmail() || !validPassword(password) || !name || !phone"
+          >SIGN UP</button>
+        </div>
       </div>
-
-      <small class="form__text text-danger" v-show="errorMessage !== ''">{{errorMessage}}</small>
-
-      <label for="emailInput">Email</label>
-      <input
-        v-model="email"
-        type="email"
-        class="form__control"
-        :class="{'border-danger': !validEmail() && email!=''}"
-        id="emailInput"
-        placeholder="Email"
-      />
-
-      <label for="passwordInput">Password</label>
-      <input
-        v-model="password"
-        type="password"
-        class="form__control"
-        :class="{'border-danger': (!validPassword(password) && password!='')}"
-        id="passwordInput"
-        placeholder="Password must be longer than 6 characters."
-      />
-
-      <label for="nameInput">Name</label>
-      <input v-model="name" type="text" class="form__control" id="nameInput" placeholder="Name"/>
-
-      <label for="phoneInput">Phone number</label>
-      <input v-model="phone" type="text" maxlength="12" class="form__control" id="phoneInput" placeholder="Phone number"/>
-
-      <label for="dobInput">Date of birth</label>
-      <input v-model="dob" type="date" class="form__control" id="dobInput"/>
-
-      <label for="identityInput">Identity card serial</label>
-      <input v-model="identity" type="text" maxlength="12" class="form__control" id="identityInput" placeholder="Identity serial"/>
-
-      <div class="btn-group mb-0">
-      <button class="btn-group__link mt-30 mb-0" @click.prevent="clickSignup()"
-        :disabled="!validEmail() || !validPassword(password)"
-        >SIGN UP</button>
-      </div>
-      </div>
-      
     </div>
   </div>
 </template>
 
 <script>
-import validator from 'validator'
+import validator from "validator";
 
 export default {
-  components: {
-  },
+  components: { Warning },
   data() {
     return {
       email: "",
@@ -67,7 +79,7 @@ export default {
       dob: "",
       identity: "",
       errorMessage: ""
-    }
+    };
   },
   methods: {
     validEmail() {
@@ -78,22 +90,23 @@ export default {
     },
     clickSignup() {
       const payload = {
-        email: this.email, 
-        userName: this.name, 
-        phoneNumber: this.phone, 
-        userPassword: this.password, 
-        dateOfBirth: this.dob, 
+        email: this.email,
+        userName: this.name,
+        phoneNumber: this.phone,
+        userPassword: this.password,
+        dateOfBirth: this.dob,
         idCardSerial: this.identity
-      }
-      Object.keys(this.$data).forEach(key => this.$data[key] = '')
+      };
+      Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
 
-      this.$store.dispatch('userSignup', payload)
-      .then((response) => {
-        console.log(response)
-        this.$router.push({name: 'Home'})
-      })
-      .catch(e => this.errorMessage = e.error || 'Signup falied.')
-    },
+      this.$store
+        .dispatch("userSignup", payload)
+        .then(response => {
+          console.log(response);
+          this.$router.push({ name: "Home" });
+        })
+        .catch(e => (this.errorMessage = e.error || "Signup falied."));
+    }
   }
 };
 </script>

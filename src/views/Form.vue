@@ -6,23 +6,12 @@
           <h4>APPOINTMENT FORM</h4>
         </div>
 
-        <small class="form__text text-danger" v-show="errorMessage !== ''">{{errorMessage}}</small>
-
+        <warning :errorMessage="errorMessage" />
         <label for="clinicInput">Clinic ID *</label>
-        <input
-          v-model="clinic"
-          type="text"
-          class="form__control"
-          id="clinicInput"
-        />
+        <input v-model="clinic" type="text" class="form__control" id="clinicInput" />
 
         <label for="dateInput">Checkup date *</label>
-        <input
-          v-model="date"
-          type="datetime-local"
-          class="form__control"
-          id="dateInput"
-        />
+        <input v-model="date" type="datetime-local" class="form__control" id="dateInput" />
 
         <label for="descriptionInput">Description</label>
         <input
@@ -36,7 +25,7 @@
         <div class="btn-group mb-0">
           <button
             class="btn-group__link mt-30 mb-0"
-            @click.prevent="submitForm(clinic, date, description)" 
+            @click.prevent="submitForm(clinic, date, description)"
             :disabled="!clinic && !date"
           >SUBMIT</button>
         </div>
@@ -89,7 +78,8 @@ import { mapActions } from "vuex";
 
 export default {
   components: {
-    Card
+    Card,
+    Warning
   },
   data() {
     return {
@@ -112,7 +102,7 @@ export default {
       this.postForm({ clinic, checkUpDate: date, description })
         .then(response => console.log(response))
         .catch(e => {
-          this.errorMessage = e || 'Submit form failed. Please try again.';
+          this.errorMessage = e || "Submit form failed. Please try again.";
           console.log(e);
         });
     },
@@ -130,7 +120,7 @@ export default {
           this.searchResult = response;
         })
         .catch(e => {
-          this.errorMessage = e || 'Fetch data failed. Please try again.';
+          this.errorMessage = e || "Fetch data failed. Please try again.";
           console.log(e);
         });
       this.searchSelect = "";

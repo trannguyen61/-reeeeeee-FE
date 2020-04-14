@@ -2,6 +2,7 @@
   <div>
     <div v-if="dataFetched" class="body-container">
       <h4 v-if="cards.length === 0">No forms needed to be checked.</h4>
+      <warning :errorMessage="errorMessage" />
       <card v-for="card in cards" :key="card.formID" :data="card" @reloadCards="reloadCards" />
     </div>
   </div>
@@ -13,28 +14,42 @@ import { mapActions } from "vuex";
 
 export default {
   components: {
-    Card
+    Card,
+    Warning
   },
   data() {
     return {
       cards: null,
-      dataFetched: false
+      dataFetched: false,
+      errorMessage: ""
     };
   },
   created() {
-    this.$store.dispatch('getForm').then(() => {
-      this.cards = this.$store.getters.getForm
-      this.dataFetched = true
-      console.log('cards', this.cards)
-    }).catch(e => console.log(e))
+    this.$store
+      .dispatch("getForm")
+      .then(() => {
+        this.cards = this.$store.getters.getForm;
+        this.dataFetched = true;
+        console.log("cards", this.cards);
+      })
+      .catch(e => console.log(e));
   },
   methods: {
     ...mapActions(["getForm"]),
-    reloadCards() {
-      this.$store.dispatch('getForm').then(() => {
-      this.cards = this.$store.getters.getForm
-      console.log('cards', this.cards)
-    }).catch(e => console.log(e))
+    reloadCards(err) {
+      this.errorMessage = "";
+
+      if (err) this.errorMessage = err;
+      this.$store
+        .dispatch("getForm")
+        .then(() => {
+          this.cards = this.$store.getters.getForm;
+          // console.log('cards', this.cards)
+        })
+        .catch(e => {
+          this.errorMessage = e;
+          console.log(e);
+        });
     }
   }
 };
