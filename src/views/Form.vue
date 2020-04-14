@@ -6,7 +6,7 @@
           <h4>APPOINTMENT FORM</h4>
         </div>
 
-        <warning :errorMessage="errorMessage" />
+        
         <label for="clinicInput">Clinic ID *</label>
         <input v-model="clinic" type="text" class="form__control" id="clinicInput" />
 
@@ -61,6 +61,8 @@
             <i class="fas fa-search"></i>
           </button>
         </div>
+
+        <warning :errorMessage="errorMessage" />
 
         <card
           v-for="result in searchResult"

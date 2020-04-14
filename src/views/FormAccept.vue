@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div v-if="dataFetched" class="body-container">
+    <div v-if="dataFetched" class="form">
       <h4 v-if="cards.length === 0">No forms needed to be checked.</h4>
-      <warning :errorMessage="errorMessage" />
+      <warning :errorMessage="errorMessage"/>
+
+      <div class="body-container">
       <card v-for="card in cards" :key="card.formID" :data="card" @reloadCards="reloadCards" />
+      </div>
     </div>
   </div>
 </template>
@@ -15,14 +18,13 @@ import { mapActions } from "vuex";
 
 export default {
   components: {
-    Card,
-    Warning
+    Card, Warning
   },
   data() {
     return {
       cards: null,
       dataFetched: false,
-      errorMessage: ""
+      errorMessage: ''
     };
   },
   created() {
@@ -37,10 +39,7 @@ export default {
   },
   methods: {
     ...mapActions(["getForm"]),
-    reloadCards(err) {
-      this.errorMessage = "";
-
-      if (err) this.errorMessage = err;
+    reloadCards() {
       this.$store
         .dispatch("getForm")
         .then(() => {
@@ -48,7 +47,6 @@ export default {
           // console.log('cards', this.cards)
         })
         .catch(e => {
-          this.errorMessage = e;
           console.log(e);
         });
     }

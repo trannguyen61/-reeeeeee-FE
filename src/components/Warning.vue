@@ -8,18 +8,30 @@
 <script>
 export default {
   props: ["errorMessage"],
-  beforeUpdate() {
-    if (this.$store.getters.getLoading) this.dotCount();
+  data() {
+    return {
+      interval: null,
+    }
   },
-  methods: {
-    dotCount() {
-      setInterval(function() {
+  computed: {
+    loading() {
+      return this.$store.getters.getLoading
+    }
+  },
+  watch: {
+    loading() {
+      if (!this.$store.getters.getLoading) {
+        clearInterval(this.interval)
+        console.log(this.interval)
+        return;
+      }
+      this.interval = setInterval(function() {
         if (document.getElementById("loading").innerText === "Loading...")
           document.getElementById("loading").innerText = "Loading";
         else document.getElementById("loading").innerText += ".";
       }, 1000);
     }
-  }
+  },
 };
 </script>
 
