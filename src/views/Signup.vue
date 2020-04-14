@@ -67,6 +67,7 @@
 
 <script>
 import validator from "validator";
+import Warning from '../components/Warning'
 
 export default {
   components: { Warning },

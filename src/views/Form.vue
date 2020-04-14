@@ -74,6 +74,7 @@
 
 <script>
 import Card from "../components/Card";
+import Warning from '../components/Warning'
 import { mapActions } from "vuex";
 
 export default {
