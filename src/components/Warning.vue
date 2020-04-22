@@ -22,7 +22,6 @@ export default {
     loading() {
       if (!this.$store.getters.getLoading) {
         clearInterval(this.interval)
-        console.log(this.interval)
         return;
       }
       this.interval = setInterval(function() {

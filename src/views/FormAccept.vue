@@ -1,11 +1,18 @@
 <template>
   <div>
     <div v-if="dataFetched" class="form">
-      <h4 v-if="cards.length === 0">No forms needed to be checked.</h4>
-      <warning :errorMessage="errorMessage"/>
+      <h4 v-if="cards.length === 0" class="body-container--mt-80">
+        No forms needed to be checked.
+      </h4>
+      <warning :error-message="errorMessage" />
 
       <div class="body-container">
-      <card v-for="card in cards" :key="card.formID" :data="card" @reloadCards="reloadCards" />
+        <card
+          v-for="card in cards"
+          :key="card.formID"
+          :data="card"
+          @reloadCards="reloadCards"
+        />
       </div>
     </div>
   </div>
@@ -13,42 +20,40 @@
 
 <script>
 import Card from "../components/Card";
-import Warning from '../components/Warning'
-import { mapActions } from "vuex";
+import Warning from "../components/Warning";
+import formApi from "../../api/form";
 
 export default {
   components: {
-    Card, Warning
+    Card,
+    Warning
   },
   data() {
     return {
       cards: null,
       dataFetched: false,
-      errorMessage: ''
+      errorMessage: ""
     };
   },
   created() {
-    this.$store
-      .dispatch("getForm")
-      .then(() => {
-        this.cards = this.$store.getters.getForm;
+    formApi
+      .getForm()
+      .then(data => {
+        this.cards = data;
         this.dataFetched = true;
-        console.log("cards", this.cards);
+        console.log(this.cards);
       })
       .catch(e => console.log(e));
   },
   methods: {
-    ...mapActions(["getForm"]),
     reloadCards() {
-      this.$store
-        .dispatch("getForm")
-        .then(() => {
-          this.cards = this.$store.getters.getForm;
-          // console.log('cards', this.cards)
+      formApi
+        .getForm()
+        .then(data => {
+          this.cards = data;
+          console.log(this.cards);
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => console.log(e));
     }
   }
 };

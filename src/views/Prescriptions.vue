@@ -10,10 +10,14 @@
           <hr noshade />
         </header>
 
-        <div class="card__section" v-for="(value, name) in propList" :key="name">
-          <div class="card__section__title">{{name}}:</div>
+        <div
+          v-for="(value, name) in propList"
+          :key="name"
+          class="card__section"
+        >
+          <div class="card__section__title">{{ name }}:</div>
 
-          <div class="card__section__text">{{value}}</div>
+          <div class="card__section__text">{{ value }}</div>
         </div>
       </div>
 
@@ -22,18 +26,28 @@
 
         <div class="list-card__search-bar">
           <input
+            id="prescriptionSearch"
             v-model="prescriptionSearch"
             type="date"
             class="form__control"
-            id="prescriptionSearch"
           />
 
-          <button class="btn-group__link btn-group__link--filled" type="button" id="searchButton" @click="search()">
+          <button
+            id="searchButton"
+            class="btn-group__link btn-group__link--filled"
+            type="button"
+            @click="search()"
+          >
             <i class="fas fa-search"></i>
           </button>
         </div>
 
-        <card class="card-item" v-for="result in searchResult" :key="result.prescription" @click.native="show(result)"/>
+        <card
+          v-for="result in searchResult"
+          :key="result.prescription"
+          class="card-item"
+          @click.native="show(result)"
+        />
       </div>
     </div>
   </div>
@@ -41,7 +55,7 @@
 
 <script>
 import Card from "../components/Card";
-import { mapActions } from "vuex";
+import presApi from "../../api/prescription";
 
 export default {
   components: {
@@ -61,21 +75,21 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getPrescription"]),
     search() {
-      this.getPrescription(this.prescriptionSearch)
+      presApi
+        .getPrescription(this.prescriptionSearch)
         .then(response => {
-          console.log(this.prescriptionSearch)
+          console.log(this.prescriptionSearch);
           console.log(response);
           this.searchResult = response;
         })
         .catch(e => console.log(e));
 
-      this.prescriptionSearch = ''
-    }, 
+      this.prescriptionSearch = "";
+    },
     show(pres) {
-      console.log('CLICKED')
-      this.propList['Patient'] = pres.prescription
+      console.log("CLICKED");
+      this.propList["Patient"] = pres.prescription;
     }
   }
 };
@@ -102,5 +116,4 @@ hr {
 .card-item:hover {
   cursor: pointer;
 }
-
 </style>
