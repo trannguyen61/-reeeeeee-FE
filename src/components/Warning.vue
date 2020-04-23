@@ -1,7 +1,14 @@
 <template>
   <div>
-    <small class="form__text text-danger" v-show="errorMessage !== ''">{{errorMessage}}</small>
-    <small class="form__text text-success" v-show="$store.getters.getLoading" id="loading">Loading</small>
+    <small v-show="errorMessage !== ''" class="form__text text-danger">{{
+      errorMessage
+    }}</small>
+    <small
+      v-show="$store.getters.getLoading"
+      id="loading"
+      class="form__text text-success"
+      >Loading</small
+    >
   </div>
 </template>
 
@@ -10,18 +17,18 @@ export default {
   props: ["errorMessage"],
   data() {
     return {
-      interval: null,
-    }
+      interval: null
+    };
   },
   computed: {
     loading() {
-      return this.$store.getters.getLoading
+      return this.$store.getters.getLoading;
     }
   },
   watch: {
     loading() {
       if (!this.$store.getters.getLoading) {
-        clearInterval(this.interval)
+        clearInterval(this.interval);
         return;
       }
       this.interval = setInterval(function() {
@@ -30,9 +37,8 @@ export default {
         else document.getElementById("loading").innerText += ".";
       }, 1000);
     }
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navBar/>
+    <navBar />
     <transition name="fadeUp" mode="out-in">
       <router-view />
     </transition>
@@ -8,11 +8,10 @@
 </template>
 
 <script>
-import NavBar from '../src/components/NavBar'
+import NavBar from "../src/components/NavBar";
 export default {
-  components: {NavBar}
+  components: { NavBar }
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

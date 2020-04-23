@@ -1,5 +1,3 @@
-import store from "../src/store/index";
-
 export default {
   userLogin(payload) {
     return axios.post(`/api/login`, {
@@ -13,24 +11,17 @@ export default {
   },
 
   searchData(payload) {
-    store.commit("TOGGLE_LOADING");
     return axios
       .post(`/api/search`, null, {
         params: {
           search: payload.search,
           data: payload.data
-        },
-        headers: {
-          Authorization: `Bearer ${store.getters.getTokenCredential}`
         }
       })
       .then(response => {
         if (response.data.code === 200 && response.data.result.length !== 0)
           return response.data.result;
         else throw new Error(response.data.err || "No data of your search.");
-      })
-      .finally(() => {
-        store.commit("TOGGLE_LOADING");
       });
   }
 };

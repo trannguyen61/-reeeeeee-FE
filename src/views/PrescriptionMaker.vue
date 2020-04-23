@@ -51,7 +51,11 @@
         />
 
         <div class="btn-group mb-0">
-          <button class="btn-group__link mt-30 mb-0" @click="submitForm">
+          <button
+            data-testid="presSubmitBtn"
+            class="btn-group__link mt-30 mb-0"
+            @click="submitForm"
+          >
             SUBMIT
           </button>
         </div>
@@ -73,6 +77,7 @@
 
           <button
             id="searchButton"
+            data-testid="presMakerSearchBtn"
             class="btn-group__link btn-group__link--filled"
             type="button"
             @click="search"

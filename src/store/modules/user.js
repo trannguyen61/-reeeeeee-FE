@@ -1,5 +1,4 @@
 // import userAxios from '../../../test/user'
-// import axios from 'axios'
 import userApi from "../../../api/user";
 
 export default {
@@ -27,8 +26,8 @@ export default {
     }
   },
   actions: {
-    userLogin({ commit }, payload) {
-      commit("TOGGLE_LOADING", { root: true });
+    userLogin({ commit, getters }, payload) {
+      commit("TOGGLE_LOADING");
       return userApi
         .userLogin({ email: payload.email, userPassword: payload.password })
         .then(response => {
@@ -37,6 +36,9 @@ export default {
             commit("SET_TOKEN", token);
             commit("SET_ROLE", response.data.role);
             localStorage.setItem("access_token", token);
+            axios.defaults.headers.common = {
+              Authorization: `Bearer ${getters.getTokenCredential}`
+            };
           } else throw new Error(response.data.err);
         })
         .catch(e => {
@@ -44,12 +46,12 @@ export default {
           throw new Error(e);
         })
         .finally(() => {
-          commit("TOGGLE_LOADING", { root: true });
+          commit("TOGGLE_LOADING");
         });
     },
 
-    userSignup({ commit }, payload) {
-      commit("TOGGLE_LOADING", { root: true });
+    userSignup({ commit, getters }, payload) {
+      commit("TOGGLE_LOADING");
       // userAxios.signup({ email, password })
       userApi
         .userSignup(payload)
@@ -60,6 +62,9 @@ export default {
             commit("SET_TOKEN", token);
             commit("SET_ROLE", response.data.role);
             localStorage.setItem("access_token", token);
+            axios.defaults.headers.common = {
+              Authorization: `Bearer ${getters.getTokenCredential}`
+            };
           } else throw new Error(response.data.err);
         })
         .catch(e => {
@@ -67,7 +72,7 @@ export default {
           throw new Error(e);
         })
         .finally(() => {
-          commit("TOGGLE_LOADING", { root: true });
+          commit("TOGGLE_LOADING");
         });
     },
 

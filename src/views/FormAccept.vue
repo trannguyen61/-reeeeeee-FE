@@ -36,24 +36,23 @@ export default {
     };
   },
   created() {
-    formApi
-      .getForm()
-      .then(data => {
-        this.cards = data;
-        this.dataFetched = true;
-        console.log(this.cards);
-      })
-      .catch(e => console.log(e));
+    this.$store.commit("TOGGLE_LOADING");
+    this.reloadCards();
   },
   methods: {
     reloadCards() {
+      this.$store.commit("TOGGLE_LOADING");
       formApi
         .getForm()
         .then(data => {
           this.cards = data;
+          this.dataFetched = true;
           console.log(this.cards);
         })
-        .catch(e => console.log(e));
+        .catch(e => console.log(e))
+        .finally(() => {
+          this.$store.commit("TOGGLE_LOADING");
+        });
     }
   }
 };

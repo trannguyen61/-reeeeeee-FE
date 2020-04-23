@@ -33,6 +33,7 @@
 
         <div class="btn-group mb-0">
           <button
+            data-testid="submitBtn"
             class="btn-group__link mt-30 mb-0"
             :disabled="!clinic && !date"
             @click.prevent="submitForm(clinic, date, description)"
@@ -71,6 +72,7 @@
 
           <button
             id="searchButton"
+            data-testid="searchBtn"
             class="btn-group__link btn-group__link--filled"
             type="button"
             @click.prevent="search()"
@@ -96,7 +98,6 @@ import Card from "../components/Card";
 import Warning from "../components/Warning";
 import formApi from "../../api/form";
 import userApi from "../../api/user";
-import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -116,20 +117,24 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["postForm", "searchData"]),
     submitForm(clinic, date, description) {
       Object.keys(this.$data).forEach(key => {
         if (key !== "searchResult") this.$data[key] = "";
       });
+      this.$store.commit("TOGGLE_LOADING");
       formApi
         .postForm({ clinic, checkUpDate: date, description })
         .then(response => console.log(response))
         .catch(e => {
           this.errorMessage = e || "Submit form failed. Please try again.";
           console.log(e);
+        })
+        .finally(() => {
+          this.$store.commit("TOGGLE_LOADING");
         });
     },
     search() {
+      this.$store.commit("TOGGLE_LOADING");
       userApi
         .searchData({
           search: this.searchSelect,
@@ -142,6 +147,9 @@ export default {
         .catch(e => {
           this.errorMessage = e || "Fetch data failed. Please try again.";
           console.log(e);
+        })
+        .finally(() => {
+          this.$store.commit("TOGGLE_LOADING");
         });
       this.searchSelect = "";
       this.formSearch = "";

@@ -34,6 +34,7 @@
 
           <button
             id="searchButton"
+            data-testid="presSearchBtn"
             class="btn-group__link btn-group__link--filled"
             type="button"
             @click="search()"

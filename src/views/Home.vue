@@ -177,12 +177,15 @@ export default {
     },
     clickLogin({ email, password }) {
       Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
-
+      this.$store.commit("TOGGLE_LOADING");
       this.$store
         .dispatch("userLogin", { email, password })
         .catch(
           e => (this.errorMessage = e || "Login falied. Please try again.")
-        );
+        )
+        .finally(() => {
+          this.$store.commit("TOGGLE_LOADING");
+        });
     }
   }
 };

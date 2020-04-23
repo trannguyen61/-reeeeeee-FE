@@ -3,6 +3,7 @@ module.exports = {
   env: {
     node: true,
     browser: true,
+    jest: true
   },
   extends: [
     "plugin:vue/recommended",
@@ -11,7 +12,7 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   globals: {
-    axios: true,
+    axios: true
   },
   parserOptions: {
     parser: "babel-eslint",

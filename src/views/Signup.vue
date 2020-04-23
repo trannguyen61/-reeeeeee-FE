@@ -6,59 +6,71 @@
           <h4>JOIN US!</h4>
         </div>
 
-        <warning :errorMessage="errorMessage" />
+        <warning :error-message="errorMessage" />
         <label for="emailInput">Email *</label>
         <input
+          id="emailInput"
           v-model="email"
           type="email"
           class="form__control"
-          :class="{'border-danger': !validEmail() && email!=''}"
-          id="emailInput"
+          :class="{ 'border-danger': !validEmail() && email != '' }"
           placeholder="Email"
         />
 
         <label for="passwordInput">Password *</label>
         <input
+          id="passwordInput"
           v-model="password"
           type="password"
           class="form__control"
-          :class="{'border-danger': (!validPassword(password) && password!='')}"
-          id="passwordInput"
+          :class="{
+            'border-danger': !validPassword(password) && password != ''
+          }"
           placeholder="Password must be longer than 6 characters."
         />
 
         <label for="nameInput">Name *</label>
-        <input v-model="name" type="text" class="form__control" id="nameInput" placeholder="Name" />
+        <input
+          id="nameInput"
+          v-model="name"
+          type="text"
+          class="form__control"
+          placeholder="Name"
+        />
 
         <label for="phoneInput">Phone number *</label>
         <input
+          id="phoneInput"
           v-model="phone"
           type="text"
           maxlength="12"
           class="form__control"
-          id="phoneInput"
           placeholder="Phone number"
         />
 
         <label for="dobInput">Date of birth</label>
-        <input v-model="dob" type="date" class="form__control" id="dobInput" />
+        <input id="dobInput" v-model="dob" type="date" class="form__control" />
 
         <label for="identityInput">Identity card serial</label>
         <input
+          id="identityInput"
           v-model="identity"
           type="text"
           maxlength="12"
           class="form__control"
-          id="identityInput"
           placeholder="Identity serial"
         />
 
         <div class="btn-group mb-0">
           <button
             class="btn-group__link mt-30 mb-0"
+            :disabled="
+              !validEmail() || !validPassword(password) || !name || !phone
+            "
             @click.prevent="clickSignup()"
-            :disabled="!validEmail() || !validPassword(password) || !name || !phone"
-          >SIGN UP</button>
+          >
+            SIGN UP
+          </button>
         </div>
       </div>
     </div>
@@ -67,7 +79,7 @@
 
 <script>
 import validator from "validator";
-import Warning from '../components/Warning'
+import Warning from "../components/Warning";
 
 export default {
   components: { Warning },
@@ -112,5 +124,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
