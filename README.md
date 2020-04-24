@@ -24,8 +24,8 @@
 [] Tạo select bar cho danh sách các phòng khám khi tạo cuộc hẹn thay vì chỉ điền ID 
 [] Dùng progress bar cho async api call thay vì static loading text
 [] Animation cho login home page
-[] Refactor component
-[] Refactor axios calls in store
+[x] Refactor component
+[x] Refactor axios calls in store
 [] Paginate search results
 [] Responsive
 [] User page
