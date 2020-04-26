@@ -81,8 +81,6 @@
           </button>
         </div>
 
-        <warning :error-message="errorMessage" />
-
         <card
           v-for="result in searchResult"
           :key="result.clinicID || result.formID"
@@ -95,14 +93,12 @@
 
 <script>
 import Card from "../components/Card";
-import Warning from "../components/Warning";
 import formApi from "../../api/form";
 import userApi from "../../api/user";
 
 export default {
   components: {
-    Card,
-    Warning
+    Card
   },
   data() {
     return {
@@ -112,8 +108,7 @@ export default {
       clinicSearch: "",
       formSearch: "",
       searchSelect: "",
-      searchResult: [],
-      errorMessage: ""
+      searchResult: []
     };
   },
   methods: {
@@ -124,9 +119,12 @@ export default {
       this.$store.commit("TOGGLE_LOADING");
       formApi
         .postForm({ clinic, checkUpDate: date, description })
-        .then(response => console.log(response))
+        .then(response => {
+          console.log(response);
+          this.$store.commit("SET_SUCCESS", "Successfully submited!");
+        })
         .catch(e => {
-          this.errorMessage = e || "Submit form failed. Please try again.";
+          this.$store.commit("SET_ERROR", e || "Submit falied.");
           console.log(e);
         })
         .finally(() => {
@@ -143,9 +141,11 @@ export default {
         .then(response => {
           console.log(response);
           this.searchResult = response;
+          if (response.length === 0)
+            this.$store.commit("SET_SUCCESS", "No data :(");
         })
         .catch(e => {
-          this.errorMessage = e || "Fetch data failed. Please try again.";
+          this.$store.commit("SET_ERROR", e || "Fetch data falied.");
           console.log(e);
         })
         .finally(() => {

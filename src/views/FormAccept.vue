@@ -4,7 +4,6 @@
       <h4 v-if="cards.length === 0" class="body-container--mt-80">
         No forms needed to be checked.
       </h4>
-      <warning :error-message="errorMessage" />
 
       <div class="body-container sm-mh20">
         <card
@@ -20,19 +19,16 @@
 
 <script>
 import Card from "../components/Card";
-import Warning from "../components/Warning";
 import formApi from "../../api/form";
 
 export default {
   components: {
-    Card,
-    Warning
+    Card
   },
   data() {
     return {
       cards: null,
-      dataFetched: false,
-      errorMessage: ""
+      dataFetched: false
     };
   },
   created() {
@@ -49,7 +45,7 @@ export default {
           this.dataFetched = true;
           console.log(this.cards);
         })
-        .catch(e => console.log(e))
+        .catch(e => this.$store.commit("SET_ERROR", e))
         .finally(() => {
           this.$store.commit("TOGGLE_LOADING");
         });

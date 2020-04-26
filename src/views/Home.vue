@@ -7,8 +7,6 @@
         :style="{ visibility: $store.getters.getToken ? 'hidden' : 'visible' }"
       >
         <div class="form">
-          <Warning :error-message="errorMessage" />
-
           <input
             id="emailInput"
             v-model="email"
@@ -153,22 +151,19 @@
 
 <script>
 import validator from "validator";
-import Warning from "../components/Warning";
 
 export default {
-  components: { Warning },
   data() {
     return {
       email: "",
-      password: "",
-      errorMessage: ""
+      password: ""
     };
   },
   watch: {
     $route(to, from) {
       console.log("ROUTE");
       if (to && from && this.$route.query.showLogin)
-        this.errorMessage = "You must first log in.";
+        this.$store.commit("SET_ERROR", "You must first log in.");
     }
   },
   methods: {
@@ -180,15 +175,7 @@ export default {
     },
     clickLogin({ email, password }) {
       Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
-      this.$store.commit("TOGGLE_LOADING");
-      this.$store
-        .dispatch("userLogin", { email, password })
-        .catch(
-          e => (this.errorMessage = e || "Login falied. Please try again.")
-        )
-        .finally(() => {
-          this.$store.commit("TOGGLE_LOADING");
-        });
+      this.$store.dispatch("userLogin", { email, password });
     }
   }
 };

@@ -1,45 +1,49 @@
 <template>
-  <div>
-    <small v-show="errorMessage !== ''" class="form__text text-danger">{{
-      errorMessage
-    }}</small>
-    <small
-      v-show="$store.getters.getLoading"
-      id="loading"
-      class="form__text text-success"
-      >Loading</small
-    >
+  <div class="notif" :class="[isSuccess ? 'notif--success' : 'notif--error']">
+    <p>{{ isSuccess ? getSuccess : getError }}</p>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
-  props: ["errorMessage"],
   data() {
     return {
-      interval: null
+      timeout: null
     };
   },
   computed: {
-    loading() {
-      return this.$store.getters.getLoading;
-    }
+    ...mapGetters(["getSuccess", "getError", "isSuccess", "isError"])
   },
-  watch: {
-    loading() {
-      console.log("LOADING ", this.$store.getters.getLoading);
-      if (!this.$store.getters.getLoading) {
-        clearInterval(this.interval);
-        return;
-      }
-      this.interval = setInterval(function() {
-        if (document.getElementById("loading").innerText === "Loading...")
-          document.getElementById("loading").innerText = "Loading";
-        else document.getElementById("loading").innerText += ".";
-      }, 1000);
-    }
+  mounted() {
+    this.timeout = setTimeout(() => {
+      if (this.isSuccess) this.setSuccess("");
+      else this.setError("");
+    }, 3000);
+  },
+  methods: {
+    ...mapMutations({ setSuccess: "SET_SUCCESS", setError: "SET_ERROR" })
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.notif {
+  position: fixed;
+  left: auto;
+  right: 10px;
+  top: 90px;
+  padding: 30px;
+  width: 15vw;
+  z-index: 3;
+
+  &--success {
+    background: #42b983;
+  }
+
+  &--error {
+    background: lightpink;
+  }
+}
+</style>
