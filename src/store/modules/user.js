@@ -39,11 +39,12 @@ export default {
             axios.defaults.headers.common = {
               Authorization: `Bearer ${getters.getTokenCredential}`
             };
+            commit("SET_SUCCESS", "Successfully loged in!", { root: true });
           } else throw new Error(response.data.err);
         })
         .catch(e => {
           localStorage.removeItem("access_token");
-          throw new Error(e);
+          commit("SET_ERROR", e || "Login falied.", { root: true });
         })
         .finally(() => {
           commit("TOGGLE_LOADING", { root: true });
@@ -65,11 +66,12 @@ export default {
             axios.defaults.headers.common = {
               Authorization: `Bearer ${getters.getTokenCredential}`
             };
+            commit("SET_SUCCESS", "Successfully signed up!", { root: true });
           } else throw new Error(response.data.err);
         })
         .catch(e => {
           localStorage.removeItem("access_token");
-          throw new Error(e);
+          commit("SET_ERROR", e || "Signup falied.", { root: true });
         })
         .finally(() => {
           commit("TOGGLE_LOADING", { root: true });

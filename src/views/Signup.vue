@@ -6,7 +6,6 @@
           <h4>JOIN US!</h4>
         </div>
 
-        <warning :error-message="errorMessage" />
         <label for="emailInput">Email *</label>
         <input
           id="emailInput"
@@ -79,10 +78,8 @@
 
 <script>
 import validator from "validator";
-import Warning from "../components/Warning";
 
 export default {
-  components: { Warning },
   data() {
     return {
       email: "",
@@ -90,8 +87,7 @@ export default {
       name: "",
       phone: "",
       dob: "",
-      identity: "",
-      errorMessage: ""
+      identity: ""
     };
   },
   methods: {
@@ -112,13 +108,10 @@ export default {
       };
       Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
 
-      this.$store
-        .dispatch("userSignup", payload)
-        .then(response => {
-          console.log(response);
-          this.$router.push({ name: "Home" });
-        })
-        .catch(e => (this.errorMessage = e.error || "Signup falied."));
+      this.$store.dispatch("userSignup", payload).then(response => {
+        console.log(response);
+        this.$router.push({ name: "Home" });
+      });
     }
   }
 };

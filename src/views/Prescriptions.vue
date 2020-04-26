@@ -83,8 +83,10 @@ export default {
           console.log(this.prescriptionSearch);
           console.log(response);
           this.searchResult = response;
+          if (response.length === 0)
+            this.$store.commit("SET_SUCCESS", "No data :(");
         })
-        .catch(e => console.log(e));
+        .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
 
       this.prescriptionSearch = "";
     },

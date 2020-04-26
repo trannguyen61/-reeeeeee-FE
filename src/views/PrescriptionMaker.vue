@@ -125,8 +125,9 @@ export default {
         .then(res => {
           Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
           console.log(res);
+          this.$store.commit("SET_SUCCESS", "Successfully submited!");
         })
-        .catch(e => console.log(e));
+        .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
     },
 
     search() {
@@ -135,8 +136,9 @@ export default {
         .then(res => {
           this.searchResult = res;
           this.patientSearch = "";
+          if (res.length === 0) this.$store.commit("SET_SUCCESS", "No data :(");
         })
-        .catch(e => console.log(e));
+        .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
     }
   }
 };
