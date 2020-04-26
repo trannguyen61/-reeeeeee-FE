@@ -6,7 +6,7 @@
       </h4>
       <warning :error-message="errorMessage" />
 
-      <div class="body-container">
+      <div class="body-container sm-mh20">
         <card
           v-for="card in cards"
           :key="card.formID"

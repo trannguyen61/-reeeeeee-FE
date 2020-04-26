@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="body-container">
-      <div class="form form--bar form--not-stretch mb-0">
+    <div class="body-container body-container--md">
+      <div class="form form--bar form--not-stretch mb-0 md-mauto">
         <div class="form__title">
           <h4>APPOINTMENT FORM</h4>
         </div>
@@ -43,10 +43,10 @@
         </div>
       </div>
 
-      <div class="list-card">
+      <div class="list-card md-mauto">
         <label for="clinicSearch">Search for clinic/form</label>
 
-        <div class="select-bar">
+        <div class="select-bar md-ml10">
           <select id="searchSelect" v-model="searchSelect" name="searchSelect">
             <option value="clinic">Clinic</option>
             <option value="form">Form</option>

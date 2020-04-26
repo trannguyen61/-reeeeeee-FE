@@ -47,13 +47,29 @@ button:focus {
   margin-top: 100px;
   display: flex;
   justify-content: space-evenly;
-
-  &--mt-80 {
-    margin-top: 80px;
-  }
+  overflow: hidden;
 
   &--flex-col {
     flex-direction: column;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  /* For desktop: */
+  .body-container {
+    &--mt-80 {
+      margin-top: 80px;
+    }
+  }
+
+}
+
+@media only screen and (max-width: 992px) {
+  /* For mobile phones: */
+  .body-container {
+    &--md {
+      flex-direction: column;
+    }
   }
 }
 
@@ -84,7 +100,7 @@ button:focus {
 
   //main page text
   &--left {
-    margin: 25px 100px 30px 50px;
+    margin: 25px auto 30px 50px;
     text-align: left;
     padding-left: 50px;
     border-left: solid 1px;
@@ -96,7 +112,6 @@ button:focus {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
-    margin-left: 150px;
   }
 
   &__title {
@@ -114,6 +129,10 @@ button:focus {
       font-size: 2em;
       margin: 30px 0 30px 0;
     }
+
+    &--right {
+      text-align: right;
+    }
   }
 
   &__text {
@@ -127,6 +146,45 @@ button:focus {
     //main page text
     &--margin {
       margin: 15px 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  /* For mobile phones: */
+  .article {
+    width: 60%; 
+
+    &--left {
+      border: 0;
+    }
+
+    &--md-center {
+      margin: auto;
+      padding: 0;
+    }
+
+    &__title {
+      &--smol {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  /* For smol mobile phones: */
+  .sm-text-center {
+    text-align: center;
+  }
+
+  .article {
+    width: 80%;
+
+    &__title {
+      &--big {
+        font-size: 3em;
+      }
     }
   }
 }
@@ -148,13 +206,33 @@ button:focus {
     margin-top: 120px;
     margin-bottom: 40px;
     display: flex;
+    overflow-x: hidden;
+    justify-content: center;
+
+    &--center {
+      justify-content: center;
+      margin-left: 10vw;
+      margin-right: 10vw;
+    }
 
     .img {
-      margin-left: 100px;
-      margin-right: 100px;
+      img {
+        max-width: 40vw;
+      }
 
       &-flexend {
         align-self: flex-end;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  /* For mobile phones: */
+  .form {
+    &__control {
+      &--md-ml0 {
+        margin-left: 0;
       }
     }
   }
@@ -191,15 +269,34 @@ button:focus {
   }
 }
 
+@media only screen and (max-width: 992px) {
+  /* For mobile phones: */
+  .list-card {
+    width: 80%;
+
+    .form__control {
+      width: 60vw;
+    }
+
+    &__search-bar {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
 //BUNDLE
 //article-bar
 .article-bar {
-  margin: 30px -200px;
+  // position: absolute;
+  margin: 30px -8vw 30px -8vw;
+  width: 20vw;
   padding: 30px;
   z-index: 1;
   color: white;
   background: $main-green;
   border-radius: 20px 0 20px 0;
+  // left: 50%;
 
   &__title {
     font-size: 1.5em;
@@ -211,12 +308,20 @@ button:focus {
   }
 }
 
+@media only screen and (max-width: 992px) {
+  /* For mobile phones: */
+  .article-bar {
+    width: 50vw;
+    margin: auto -30vw;
+  }
+}
+
 //BUNDLE
 //btn-group
 
 .btn-group {
   margin-bottom: 30px;
-  margin-left: 50px;
+  margin-left: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -245,6 +350,15 @@ button:focus {
 
     .btn-group__link {
       margin: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  /* For smol mobile phones: */
+  .btn-group {
+    &__link {
+      margin-left: 0;
     }
   }
 }
@@ -329,6 +443,32 @@ button:focus {
   }
 }
 
+@media only screen and (max-width: 992px) {
+  /* For mobile phones: */
+  .form {
+    &--bar {
+      width: 70%;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  /* For smol mobile phones: */
+  .form {
+    &__control {
+      width: 70vw;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .form {
+    &__control {
+      width: 60vw;
+    }
+  }
+}
+
 //BUNDLE
 //navbar
 .navbar {
@@ -386,6 +526,15 @@ button:focus {
   }
 }
 
+@media only screen and (max-width: 600px) {
+  /* For smol mobile phones: */
+  .navbar {
+    &__list {
+      justify-content: space-between;
+    }
+  }
+}
+
 //IMPORTANT
 
 .ml-0 {
@@ -402,6 +551,74 @@ button:focus {
 
 .mt-30 {
   margin-top: 30px;
+}
+
+.ml-100 {
+  margin-left: 100px;
+}
+
+@media only screen and (max-width: 992px) {
+  /* For mobile phones: */
+  .md-hidden {
+    visibility: hidden;
+  }
+
+  .md-mauto {
+    margin: auto;
+  }
+
+  .md-ml10 {
+    margin-left: 10px;
+  }
+  
+  .md-ml30 {
+    margin-left: 30px;
+  }
+
+  .md-mt30 {
+    margin-top: 30px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  /* For smol mobile phones: */
+  .sm-hidden {
+    visibility: hidden;
+  }
+
+  .sm-mauto {
+    margin: auto;
+  }
+
+  .sm-m0 {
+    margin: 0;
+  }
+
+  .sm-mt10 {
+    margin-top: 10px;
+  }
+
+  .sm-ml10 {
+    margin-left: 10px;
+  }
+
+  .sm-w0 {
+    width: 0;
+  }
+
+  .sm-mh20 {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .sm-mh10 {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .sm-p0 {
+    padding: 0;
+  }
 }
 
 .text-danger {
