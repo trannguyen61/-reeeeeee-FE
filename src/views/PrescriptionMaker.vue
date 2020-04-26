@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="body-container">
       <div class="form form--bar form--not-stretch">
         <header>
@@ -12,24 +11,53 @@
         </header>
 
         <label for="patientInput">Patient</label>
-        <input v-model="patient" type="text" class="form__control" id="patientInput" />
+        <input
+          id="patientInput"
+          v-model="patient"
+          type="text"
+          class="form__control"
+        />
 
         <label for="doctorInput">Doctor</label>
-        <input v-model="doctor" type="text" class="form__control" id="doctorInput" />
+        <input
+          id="doctorInput"
+          v-model="doctor"
+          type="text"
+          class="form__control"
+        />
 
         <label for="diagnosisInput">Diagnosis</label>
-        <input v-model="diagnosis" type="text" class="form__control" id="diagnosisInput" />
+        <input
+          id="diagnosisInput"
+          v-model="diagnosis"
+          type="text"
+          class="form__control"
+        />
 
         <label for="medicineInput">Medicine</label>
-        <input v-model="medicine" type="text" class="form__control" id="medicineInput" />
+        <input
+          id="medicineInput"
+          v-model="medicine"
+          type="text"
+          class="form__control"
+        />
 
         <label for="timeInput">Re-examination time</label>
-        <input v-model="time" type="date" class="form__control" id="timeInput" />
+        <input
+          id="timeInput"
+          v-model="time"
+          type="date"
+          class="form__control"
+        />
 
         <div class="btn-group mb-0">
           <button
-            class="btn-group__link mt-30 mb-0" @click="submitForm"
-          >SUBMIT</button>
+            data-testid="presSubmitBtn"
+            class="btn-group__link mt-30 mb-0"
+            @click="submitForm"
+          >
+            SUBMIT
+          </button>
         </div>
       </div>
 
@@ -38,70 +66,80 @@
 
         <div class="list-card__search-bar">
           <input
+            id="patientSearch"
             v-model="patientSearch"
             type="email"
             class="form__control"
-            id="patientSearch"
             placeholder="Patient's email"
           />
 
           <!-- Add @click here -->
 
-          <button class="btn-group__link btn-group__link--filled" type="button" id="searchButton" 
-            @click="search">
+          <button
+            id="searchButton"
+            data-testid="presMakerSearchBtn"
+            class="btn-group__link btn-group__link--filled"
+            type="button"
+            @click="search"
+          >
             <i class="fas fa-search"></i>
           </button>
         </div>
 
-        <card v-for="result in searchResult" :key="result.patient"/>
+        <card v-for="result in searchResult" :key="result.patient" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Card from '../components/Card'
+import Card from "../components/Card";
+import presApi from "../../api/prescription";
+import userApi from "../../api/user";
 
 export default {
-    components: {
-        Card
-    },
-    data() {
-      return {
-        patient: "",
-        doctor: "",
-        diagnosis: "",
-        medicine: "",
-        time: "",
-        patientSearch: "",
-        searchResult: []
-      }
-    },
-    methods: {
-      submitForm() {
-        this.$store.dispatch('postPres', 
-          { patient: this.patient, 
-          doctor: this.doctor, 
-          diagnosis: this.diagnosis, 
-          medicine: this.medicine, 
-          time: this.time })
+  components: {
+    Card
+  },
+  data() {
+    return {
+      patient: "",
+      doctor: "",
+      diagnosis: "",
+      medicine: "",
+      time: "",
+      patientSearch: "",
+      searchResult: []
+    };
+  },
+  methods: {
+    submitForm() {
+      presApi
+        .postPrescription({
+          patient: this.patient,
+          doctor: this.doctor,
+          diagnosis: this.diagnosis,
+          medicine: this.medicine,
+          time: this.time
+        })
         .then(res => {
           Object.keys(this.$data).forEach(key => (this.$data[key] = ""));
-          console.log(res)
+          console.log(res);
         })
-        .catch(e => console.log(e))
-      },
+        .catch(e => console.log(e));
+    },
 
-      search() {
-        this.$store.dispatch('searchPatient', this.patientSearch) 
+    search() {
+      userApi
+        .searchData(this.patientSearch)
         .then(res => {
-          this.searchResult = res
-          this.patientSearch = ''
+          this.searchResult = res;
+          this.patientSearch = "";
         })
-        .catch(e => console.log(e))
-      }
+        .catch(e => console.log(e));
     }
-}
+  }
+};
 </script>
 
 <style lang="scss" scoped>
