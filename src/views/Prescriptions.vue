@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="body-container">
-      <div class="form form--bar form--not-stretch">
+    <div class="body-container body-container--md">
+      <div class="form form--bar form--not-stretch md-mauto">
         <header>
           <div class="form__title">
             <h4>PRESCRIPTION</h4>
@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div class="list-card">
+      <div class="list-card md-mauto">
         <label for="clinicSearch">Search for prescription</label>
 
         <div class="list-card__search-bar">

@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <div class="body-container body-container--mt-80">
+    <div class="body-container body-container--mt-80 body-container--md">
       <!-- Hide login form when user is already logged in -->
       <div
-        class="btn-group"
+        class="btn-group md-mauto"
         :style="{ visibility: $store.getters.getToken ? 'hidden' : 'visible' }"
       >
         <div class="form">
@@ -13,7 +13,7 @@
             id="emailInput"
             v-model="email"
             type="email"
-            class="form__control form__control--ml50"
+            class="form__control form__control--ml50 md-ml0 sm-mauto"
             :class="{ 'border-danger': !validEmail() && email != '' }"
             placeholder="Email"
           />
@@ -22,7 +22,7 @@
             id="passwordInput"
             v-model="password"
             type="password"
-            class="form__control form__control--ml50"
+            class="form__control form__control--ml50 md-ml0 sm-mauto sm-mt10"
             :class="{
               'border-danger': !validPassword(password) && password != ''
             }"
@@ -30,7 +30,7 @@
           />
         </div>
         <button
-          class="btn-group__link"
+          class="btn-group__link sm-mauto"
           :disabled="!validEmail() || !validPassword(password)"
           @click.prevent="clickLogin({ email, password })"
         >
@@ -39,12 +39,12 @@
 
         <router-link
           to="/signup"
-          class="btn-group__link btn-group__link--filled"
+          class="btn-group__link btn-group__link--filled sm-mauto sm-mt10"
           >SIGN UP</router-link
         >
       </div>
 
-      <div class="article article--left">
+      <div class="article article--left article--md-center">
         <div class="article__title article__title--big">
           <strong>:reeeeeeee:</strong>
         </div>
@@ -83,17 +83,19 @@
       <i class="fas fa-chevron-down fa-2x"></i>
     </div>
 
-    <div class="home__page">
+    <div class="home__page home__page--center md-mt30">
       <div
         class="article article--column"
         data-aos="fade-right"
         data-aos-duration="1000"
       >
-        <div class="article__title article__title--smol">
+        <div
+          class="article__title article__title--smol article__title--right sm-text-center"
+        >
           Wise words, lol jk just scroll down
         </div>
 
-        <div class="article__text article__text--right">
+        <div class="article__text article__text--right sm-text-center">
           Powered by Vue and NodeJS.
           <br />I actually hate green, but a full-black health-care website is
           not a good idea imo. Who's gonna sign up for a website that looks like
@@ -108,8 +110,9 @@
         </div>
       </div>
 
-      <div class="img">
+      <div class="img ml-100 md-ml30 sm-m0">
         <img
+          class="sm-w0"
           data-aos="fade-left"
           data-aos-duration="1000"
           src="../assets/01.jpg"
@@ -119,8 +122,8 @@
       </div>
     </div>
 
-    <div class="home__page">
-      <div class="img" data-aos="fade-right" data-aos-duration="2000">
+    <div class="home__page home__page--center md-mt30">
+      <div class="img md-hidden" data-aos="fade-right" data-aos-duration="2000">
         <img src="../assets/02.jpg" width="500px" alt />
       </div>
 
@@ -138,7 +141,7 @@
       </div>
 
       <div
-        class="img img-flexend"
+        class="img img-flexend md-hidden"
         data-aos="fade-left"
         data-aos-duration="1000"
       >
