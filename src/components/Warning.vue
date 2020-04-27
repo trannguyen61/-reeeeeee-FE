@@ -37,6 +37,11 @@ export default {
   padding: 30px;
   width: 15vw;
   z-index: 3;
+  border-radius: 10px;
+
+  p {
+    color: white;
+  }
 
   &--success {
     background: #42b983;
@@ -44,9 +49,14 @@ export default {
 
   &--error {
     background: darkred;
-    p {
-      color: white;
-    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  /* For smol mobile phones: */
+  .notif {
+    width: 100vw;
+    right: -15px;
   }
 }
 </style>

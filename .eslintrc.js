@@ -9,7 +9,7 @@ module.exports = {
     "plugin:vue/recommended",
     "eslint:recommended",
     "prettier/vue",
-    "plugin:prettier/recommended",
+    "plugin:prettier/recommended"
   ],
   globals: {
     axios: true,

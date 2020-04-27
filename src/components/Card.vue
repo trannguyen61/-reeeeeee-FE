@@ -1,11 +1,11 @@
 <template>
   <div class="card">
-    <div v-if="role === 'patient' || data.patientID">
+    <div v-if="role === 'patient' || data.userID">
       <div class="card__title">
         {{
           data.clinicID || data.formID
             ? "ID: " + (data.clinicID ? data.clinicID : data.formID)
-            : "Email: "
+            : "Email: " + data.email
         }}
       </div>
       <hr noshade />
@@ -17,8 +17,12 @@
               ? "Name: " + data.clinicName
               : data.clinic
               ? "ClinicID: " + data.clinic
-              : "Email "
+              : "Name: " + data.userName
           }}
+        </div>
+
+        <div v-if="data.userID" class="card__section__title">
+          {{ "Medical history: " + data.medicalHistory }}
         </div>
 
         <div v-if="data.clinicID" class="card__section__text">
@@ -36,12 +40,12 @@
         </div>
 
         <div class="card__section__text">
-          Description: {{ data.description }}
+          Description: {{ data.description || data.symptom }}
         </div>
       </div>
     </div>
 
-    <div v-if="role === 'doctor'">
+    <div v-else>
       <div class="card__title">
         {{
           "Check-up Date: " +

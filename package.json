@@ -47,7 +47,8 @@
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended",
-      "@vue/prettier"
+      "@vue/prettier",
+      "plugin:vue/vue3-recommended"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
@@ -63,6 +64,9 @@
           "jest": true
         }
       }
+    ],
+    "eslint.workingDirectories": [
+      { "mode": "auto" }
     ]
   },
   "browserslist": [

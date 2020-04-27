@@ -86,7 +86,7 @@ button:focus {
         border: none;
         width: 100%;
         background: white;
-        padding-left: 5px;
+        padding-left: 10px;
     }
 
     select:focus {
@@ -243,6 +243,7 @@ button:focus {
   width: 30%;
   display: flex;
   flex-direction: column;
+  text-align: start;
 
   label {
     position: relative;
@@ -274,7 +275,7 @@ button:focus {
   /* For mobile phones: */
   .list-card {
     width: 80%;
-
+    
     .form__control {
       width: 60vw;
     }

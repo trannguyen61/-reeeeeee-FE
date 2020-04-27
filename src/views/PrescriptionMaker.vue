@@ -61,32 +61,15 @@
         </div>
       </div>
 
-      <div class="list-card md-mauto">
-        <label for="clinicSearch">Search for patients</label>
-
-        <div class="list-card__search-bar">
-          <input
-            id="patientSearch"
-            v-model="patientSearch"
-            type="email"
-            class="form__control"
-            placeholder="Patient's email"
-          />
-
-          <!-- Add @click here -->
-
-          <button
-            id="searchButton"
-            data-testid="presMakerSearchBtn"
-            class="btn-group__link btn-group__link--filled"
-            type="button"
-            @click="search"
-          >
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-
-        <card v-for="result in searchResult" :key="result.patient" />
+      <div class="list-card md-mauto md-mt30">
+        <SearchBar @searchData="searchData">
+          <template slot="label">Search for patients</template>
+        </SearchBar>
+        <card
+          v-for="result in searchResult"
+          :key="result.userID"
+          :data="result"
+        />
       </div>
     </div>
   </div>
@@ -94,12 +77,13 @@
 
 <script>
 import Card from "../components/Card";
+import SearchBar from "../components/SearchBar";
 import presApi from "../../api/prescription";
-import userApi from "../../api/user";
 
 export default {
   components: {
-    Card
+    Card,
+    SearchBar
   },
   data() {
     return {
@@ -108,7 +92,6 @@ export default {
       diagnosis: "",
       medicine: "",
       time: "",
-      patientSearch: "",
       searchResult: []
     };
   },
@@ -130,15 +113,10 @@ export default {
         .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
     },
 
-    search() {
-      userApi
-        .searchData(this.patientSearch)
-        .then(res => {
-          this.searchResult = res;
-          this.patientSearch = "";
-          if (res.length === 0) this.$store.commit("SET_SUCCESS", "No data :(");
-        })
-        .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
+    searchData(data) {
+      console.log(data);
+      this.searchResult = data;
+      console.log(this.searchResult);
     }
   }
 };

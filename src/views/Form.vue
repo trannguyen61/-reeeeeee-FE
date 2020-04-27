@@ -53,43 +53,27 @@
         </div>
       </div>
 
-      <div class="list-card md-mauto">
-        <label for="clinicSearch">Search for clinic/form</label>
+      <div class="list-card md-mauto md-mt30">
+        <SearchBar
+          :search-select="searchSelect"
+          :search-type="searchSelect === 'clinic' ? 'text' : 'date'"
+          @searchData="searchData"
+        >
+          <template slot="label">Search for clinic/form</template>
 
-        <div class="select-bar md-ml10">
-          <select id="searchSelect" v-model="searchSelect" name="searchSelect">
-            <option value="clinic">Clinic</option>
-            <option value="form">Form</option>
-          </select>
-        </div>
-
-        <div class="list-card__search-bar">
-          <input
-            v-if="searchSelect === 'form'"
-            id="formSearch"
-            v-model="formSearch"
-            type="date"
-            class="form__control"
-          />
-
-          <input
-            v-else
-            id="clinicSearch"
-            v-model="clinicSearch"
-            type="text"
-            class="form__control"
-          />
-
-          <button
-            id="searchButton"
-            data-testid="searchBtn"
-            class="btn-group__link btn-group__link--filled"
-            type="button"
-            @click.prevent="search()"
-          >
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+          <template slot="option">
+            <div class="select-bar md-ml10">
+              <select
+                id="searchSelect"
+                v-model="searchSelect"
+                name="searchSelect"
+              >
+                <option value="clinic">Clinic</option>
+                <option value="form">Form</option>
+              </select>
+            </div>
+          </template>
+        </SearchBar>
 
         <card
           v-for="result in searchResult"
@@ -103,23 +87,23 @@
 
 <script>
 import Card from "../components/Card";
+import SearchBar from "../components/SearchBar";
 import formApi from "../../api/form";
 import userApi from "../../api/user";
 
 export default {
   components: {
-    Card
+    Card,
+    SearchBar
   },
   data() {
     return {
       clinic: "",
       date: "",
       description: "",
-      clinicSearch: "",
-      formSearch: "",
-      searchSelect: "",
       searchResult: [],
-      clinicData: []
+      clinicData: [],
+      searchSelect: ""
     };
   },
   created() {
@@ -145,30 +129,6 @@ export default {
           this.$store.commit("TOGGLE_LOADING");
         });
     },
-    search() {
-      this.$store.commit("TOGGLE_LOADING");
-      userApi
-        .searchData({
-          search: this.searchSelect,
-          data: this.formSearch || this.clinicSearch
-        })
-        .then(response => {
-          console.log(response);
-          this.searchResult = response;
-          if (response.length === 0)
-            this.$store.commit("SET_SUCCESS", "No data :(");
-        })
-        .catch(e => {
-          this.$store.commit("SET_ERROR", e || "Fetch data falied.");
-          console.log(e);
-        })
-        .finally(() => {
-          this.$store.commit("TOGGLE_LOADING");
-        });
-      this.searchSelect = "";
-      this.formSearch = "";
-      this.clinicSearch = "";
-    },
     getClinics() {
       userApi
         .getClinics()
@@ -179,6 +139,9 @@ export default {
         .catch(e => {
           this.$store.commit("SET_ERROR", e || "Fetch data falied.");
         });
+    },
+    searchData(data) {
+      this.searchResult = data;
     }
   }
 };
