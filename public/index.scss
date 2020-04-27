@@ -75,12 +75,13 @@ button:focus {
 
 .select-bar {
   margin: 0 0 10px 0;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #e5e5e5;  
   border-radius: 20px;
-    padding: 8px;
-    width: 70%;
+  width: 70%;
 
     select {
+      border-radius: 20px;
+      padding: 8px;
         font-size: 14px;
         border: none;
         width: 100%;

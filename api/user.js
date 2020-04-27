@@ -23,5 +23,14 @@ export default {
           return response.data.result;
         else throw new Error(response.data.err || "No data of your search.");
       });
+  },
+
+  getClinics() {
+    return axios.get("/api/search/clinics").then(response => {
+      console.log(response);
+      if (response.data.code === 200 && response.data.result.length !== 0)
+        return response.data.result;
+      else throw new Error(response.data.err || "No data of your search.");
+    });
   }
 };

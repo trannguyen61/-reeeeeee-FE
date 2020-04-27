@@ -6,13 +6,23 @@
           <h4>APPOINTMENT FORM</h4>
         </div>
 
-        <label for="clinicInput">Clinic ID *</label>
-        <input
+        <label for="clinicInput">Clinic *</label>
+        <!-- <input
           id="clinicInput"
           v-model="clinic"
           type="text"
           class="form__control"
-        />
+        /> -->
+        <div class="select-bar">
+          <select v-model="clinic" name="clinicSelect">
+            <option
+              v-for="data in clinicData"
+              :key="data.clinicID"
+              :value="data.clinicID"
+              >{{ data.clinicID + " - " + data.clinicName }}</option
+            >
+          </select>
+        </div>
 
         <label for="dateInput">Checkup date *</label>
         <input
@@ -108,8 +118,12 @@ export default {
       clinicSearch: "",
       formSearch: "",
       searchSelect: "",
-      searchResult: []
+      searchResult: [],
+      clinicData: []
     };
+  },
+  created() {
+    this.getClinics();
   },
   methods: {
     submitForm(clinic, date, description) {
@@ -154,6 +168,17 @@ export default {
       this.searchSelect = "";
       this.formSearch = "";
       this.clinicSearch = "";
+    },
+    getClinics() {
+      userApi
+        .getClinics()
+        .then(data => {
+          this.clinicData = data;
+          console.log(data);
+        })
+        .catch(e => {
+          this.$store.commit("SET_ERROR", e || "Fetch data falied.");
+        });
     }
   }
 };
