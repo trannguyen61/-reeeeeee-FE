@@ -5,6 +5,8 @@
       <div
         class="btn-group"
         :style="{ visibility: $store.getters.getToken ? 'hidden' : 'visible' }"
+        data-aos="fade-right"
+        data-aos-duration="1000"
       >
         <div class="form">
           <input
