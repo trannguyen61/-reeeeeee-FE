@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home";
 
 import store from "../store/index";
+import nProgress from "nprogress";
+nProgress.configure({ showSpinner: false });
 
 Vue.use(VueRouter);
 
@@ -84,6 +86,18 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeResolve((to, from, next) => {
+  if (to.path) {
+    nProgress.start();
+  }
+
+  next();
+});
+
+router.afterEach(() => {
+  nProgress.done();
 });
 
 export default router;

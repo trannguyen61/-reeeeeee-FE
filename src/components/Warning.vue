@@ -43,7 +43,10 @@ export default {
   }
 
   &--error {
-    background: lightpink;
+    background: darkred;
+    p {
+      color: white;
+    }
   }
 }
 </style>

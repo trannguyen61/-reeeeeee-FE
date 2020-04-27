@@ -12,7 +12,8 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   globals: {
-    axios: true
+    axios: true,
+    nProgress: true
   },
   parserOptions: {
     parser: "babel-eslint",
