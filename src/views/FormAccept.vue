@@ -32,7 +32,6 @@ export default {
     };
   },
   created() {
-    this.$store.commit("TOGGLE_LOADING");
     this.reloadCards();
   },
   methods: {

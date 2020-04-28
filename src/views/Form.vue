@@ -67,6 +67,7 @@
                 id="searchSelect"
                 v-model="searchSelect"
                 name="searchSelect"
+                @change="changeSelect"
               >
                 <option value="clinic">Clinic</option>
                 <option value="form">Form</option>
@@ -79,6 +80,7 @@
           v-for="result in searchResult"
           :key="result.clinicID || result.formID"
           :data="result"
+          :data-type="searchSelect"
         />
       </div>
     </div>
@@ -142,6 +144,15 @@ export default {
     },
     searchData(data) {
       this.searchResult = data;
+      console.log(this.searchResult);
+    },
+    changeSelect() {
+      if (this.searchResult !== []) {
+        console.log(this.searchSelect);
+
+        this.searchResult = "";
+        // this.searchSelect = "";
+      }
     }
   }
 };
