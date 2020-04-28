@@ -22,30 +22,11 @@
       </div>
 
       <div class="list-card md-mauto">
-        <label for="clinicSearch">Search for prescription</label>
-
-        <div class="list-card__search-bar">
-          <input
-            id="prescriptionSearch"
-            v-model="prescriptionSearch"
-            type="date"
-            class="form__control"
-          />
-
-          <button
-            id="searchButton"
-            data-testid="presSearchBtn"
-            class="btn-group__link btn-group__link--filled"
-            type="button"
-            @click="search()"
-          >
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-
         <card
-          v-for="result in searchResult"
-          :key="result.prescription"
+          v-for="result in pres"
+          :key="result.prescriptionID"
+          data-type="prescription"
+          :data="result"
           class="card-item"
           @click.native="show(result)"
         />
@@ -65,34 +46,42 @@ export default {
   data() {
     return {
       propList: {
-        Patient: "ABC",
+        "Check-up date": "ABC",
         Doctor: "XYZ",
         Diagnosis: "",
-        Medecine: "",
+        Medicine: "",
+        Dose: "",
         "Re-examination time": ""
       },
-      prescriptionSearch: "",
-      searchResult: []
+      pres: []
     };
   },
+  created() {
+    this.getPres();
+  },
   methods: {
-    search() {
+    getPres() {
       presApi
-        .getPrescription(this.prescriptionSearch)
+        .getPrescription()
         .then(response => {
-          console.log(this.prescriptionSearch);
           console.log(response);
-          this.searchResult = response;
+          this.pres = response;
           if (response.length === 0)
             this.$store.commit("SET_SUCCESS", "No data :(");
         })
-        .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
-
-      this.prescriptionSearch = "";
+        .catch(e => {
+          console.log(e);
+          this.$store.commit("SET_ERROR", e || "Something's wrong.");
+        });
     },
     show(pres) {
       console.log("CLICKED");
-      this.propList["Patient"] = pres.prescription;
+      this.propList["Check-up date"] = pres.checkUpDate;
+      this.propList["Doctor"] = pres.doctor;
+      this.propList["Diagnosis"] = pres.diagnosis;
+      this.propList["Medicine"] = pres.medicine;
+      this.propList["Dose"] = pres.dose;
+      this.propList["Re-examination time"] = pres.reExaminationTime;
     }
   }
 };
