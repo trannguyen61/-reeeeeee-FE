@@ -10,18 +10,10 @@
           <hr noshade />
         </header>
 
-        <label for="patientInput">Patient</label>
+        <label for="formInput">Check-up form ID</label>
         <input
-          id="patientInput"
-          v-model="patient"
-          type="text"
-          class="form__control"
-        />
-
-        <label for="doctorInput">Doctor</label>
-        <input
-          id="doctorInput"
-          v-model="doctor"
+          id="formInput"
+          v-model="form"
           type="text"
           class="form__control"
         />
@@ -69,6 +61,7 @@
           v-for="result in searchResult"
           :key="result.userID"
           :data="result"
+          data-type="patient"
         />
       </div>
     </div>
@@ -87,7 +80,7 @@ export default {
   },
   data() {
     return {
-      patient: "",
+      form: "",
       doctor: "",
       diagnosis: "",
       medicine: "",
@@ -99,7 +92,7 @@ export default {
     submitForm() {
       presApi
         .postPrescription({
-          patient: this.patient,
+          form: this.form,
           doctor: this.doctor,
           diagnosis: this.diagnosis,
           medicine: this.medicine,
