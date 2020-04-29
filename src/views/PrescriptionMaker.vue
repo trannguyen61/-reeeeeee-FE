@@ -53,39 +53,27 @@
         </div>
       </div>
 
-      <div class="list-card md-mauto md-mt30">
-        <SearchBar @searchData="searchData">
-          <template slot="label">Search for patients</template>
-        </SearchBar>
-        <card
-          v-for="result in searchResult"
-          :key="result.userID"
-          :data="result"
-          data-type="patient"
-        />
-      </div>
+      <SearchBar>
+        <template slot="label">Search for patients</template>
+      </SearchBar>
     </div>
   </div>
 </template>
 
 <script>
-import Card from "../components/Card";
 import SearchBar from "../components/SearchBar";
 import presApi from "../../api/prescription";
 
 export default {
   components: {
-    Card,
     SearchBar
   },
   data() {
     return {
       form: "",
-      doctor: "",
       diagnosis: "",
       medicine: "",
-      time: "",
-      searchResult: []
+      time: ""
     };
   },
   methods: {
@@ -93,7 +81,6 @@ export default {
       presApi
         .postPrescription({
           form: this.form,
-          doctor: this.doctor,
           diagnosis: this.diagnosis,
           medicine: this.medicine,
           time: this.time
@@ -104,12 +91,6 @@ export default {
           this.$store.commit("SET_SUCCESS", "Successfully submited!");
         })
         .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
-    },
-
-    searchData(data) {
-      console.log(data);
-      this.searchResult = data;
-      console.log(this.searchResult);
     }
   }
 };

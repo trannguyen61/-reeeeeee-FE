@@ -53,49 +53,37 @@
         </div>
       </div>
 
-      <div class="list-card md-mauto md-mt30">
-        <SearchBar
-          :search-select="searchSelect"
-          :search-type="searchSelect === 'clinic' ? 'text' : 'date'"
-          @searchData="searchData"
-        >
-          <template slot="label">Search for clinic/form</template>
+      <SearchBar
+        :search-select="searchSelect"
+        :search-type="searchSelect === 'clinic' ? 'text' : 'date'"
+      >
+        <template slot="label">Search for clinic/form</template>
 
-          <template slot="option">
-            <div class="select-bar md-ml10">
-              <select
-                id="searchSelect"
-                v-model="searchSelect"
-                name="searchSelect"
-                @change="changeSelect"
-              >
-                <option value="clinic">Clinic</option>
-                <option value="form">Form</option>
-              </select>
-            </div>
-          </template>
-        </SearchBar>
-
-        <card
-          v-for="result in searchResult"
-          :key="result.clinicID || result.formID"
-          :data="result"
-          :data-type="searchSelect"
-        />
-      </div>
+        <template slot="option">
+          <div class="select-bar md-ml10">
+            <select
+              id="searchSelect"
+              v-model="searchSelect"
+              name="searchSelect"
+              @change="changeSelect"
+            >
+              <option value="clinic">Clinic</option>
+              <option value="form">Form</option>
+            </select>
+          </div>
+        </template>
+      </SearchBar>
     </div>
   </div>
 </template>
 
 <script>
-import Card from "../components/Card";
 import SearchBar from "../components/SearchBar";
 import formApi from "../../api/form";
 import userApi from "../../api/user";
 
 export default {
   components: {
-    Card,
     SearchBar
   },
   data() {
@@ -103,7 +91,6 @@ export default {
       clinic: "",
       date: "",
       description: "",
-      searchResult: [],
       clinicData: [],
       searchSelect: ""
     };
@@ -142,16 +129,11 @@ export default {
           this.$store.commit("SET_ERROR", e || "Fetch data falied.");
         });
     },
-    searchData(data) {
-      this.searchResult = data;
-      console.log(this.searchResult);
-    },
     changeSelect() {
       if (this.searchResult !== []) {
         console.log(this.searchSelect);
 
         this.searchResult = "";
-        // this.searchSelect = "";
       }
     }
   }

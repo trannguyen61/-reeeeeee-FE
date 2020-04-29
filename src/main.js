@@ -33,7 +33,7 @@ global.axios.interceptors.response.use(
   error => {
     nProgress.done();
     if (error.response.status === 401) {
-      // store.dispatch("userSignout");
+      store.dispatch("userSignout");
       router.push({ name: "Home" });
       location.reload();
     }

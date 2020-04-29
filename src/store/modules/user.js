@@ -88,6 +88,7 @@ export default {
       commit("SET_TOKEN", "");
       commit("SET_ROLE", "");
       localStorage.removeItem("access_token");
+      localStorage.removeItem("role");
     }
   }
 };

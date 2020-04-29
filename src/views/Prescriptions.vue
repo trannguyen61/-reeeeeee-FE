@@ -21,27 +21,38 @@
         </div>
       </div>
 
-      <div class="list-card md-mauto">
-        <card
-          v-for="result in pres"
-          :key="result.prescriptionID"
-          data-type="prescription"
-          :data="result"
-          class="card-item"
-          @click.native="show(result)"
-        />
-      </div>
+      <SearchBar
+        search-select="prescription"
+        search-type="text"
+        :default-card="true"
+        @searchData="searchData"
+      >
+        <template slot="label">Search for prescription</template>
+
+        <template slot="card">
+          <card
+            v-for="result in pres"
+            :key="result.prescriptionID"
+            data-type="prescription"
+            :data="result"
+            class="card-item"
+            @click.native="show(result)"
+          />
+        </template>
+      </SearchBar>
     </div>
   </div>
 </template>
 
 <script>
 import Card from "../components/Card";
+import SearchBar from "../components/SearchBar";
 import presApi from "../../api/prescription";
 
 export default {
   components: {
-    Card
+    Card,
+    SearchBar
   },
   data() {
     return {
@@ -73,6 +84,9 @@ export default {
           console.log(e);
           this.$store.commit("SET_ERROR", e || "Something's wrong.");
         });
+    },
+    searchData(data) {
+      this.pres = data;
     },
     show(pres) {
       console.log("CLICKED");

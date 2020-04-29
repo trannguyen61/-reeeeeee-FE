@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list-card md-mauto md-mt30">
     <label><slot name="label"></slot></label>
 
     <slot name="option"></slot>
@@ -31,12 +31,41 @@
         <i class="fas fa-search"></i>
       </button>
     </div>
+
+    <slot name="card">
+      <card
+        v-for="result in searchResult"
+        :key="result.clinicID || result.formID || result.userID"
+        :data="result"
+        :data-type="searchSelect"
+      />
+    </slot>
+
+    <div v-show="searchResult.length !== 0" class="paginate">
+      <button
+        v-show="searchPage !== 0"
+        class="btn-group__link btn-group__link--filled"
+        @click="paginate(-1)"
+      >
+        Prev
+      </button>
+      <button
+        v-show="(searchPage + 1) * paginateNum < maxLen"
+        class="btn-group__link btn-group__link--filled"
+        @click="paginate(1)"
+      >
+        Next
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
+import Card from "./Card";
 import userApi from "../../api/user";
+
 export default {
+  components: { Card },
   props: {
     searchType: {
       type: String,
@@ -45,12 +74,33 @@ export default {
     searchSelect: {
       type: String,
       default: "patient"
+    },
+    paginateNum: {
+      type: Number,
+      default: 2
+    },
+    defaultCard: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      searchQuery: ""
+      searchQuery: "",
+      searchResult: [],
+      searchPage: 0,
+      maxLen: 0
     };
+  },
+  watch: {
+    searchSelect() {
+      if (this.searchResult !== []) {
+        this.searchQuery = "";
+        this.searchResult = [];
+        this.searchPage = 0;
+        this.maxLen = 0;
+      }
+    }
   },
   methods: {
     search() {
@@ -58,13 +108,20 @@ export default {
       userApi
         .searchData({
           search: this.searchSelect,
-          data: this.searchQuery
+          data: this.searchQuery,
+          page: this.searchPage,
+          num: this.paginateNum
         })
         .then(response => {
           // console.log(response);
-          this.$emit("searchData", response);
-          if (response.length === 0)
+          this.maxLen = response.dataLength;
+
+          if (this.defaultCard) this.$emit("searchData", response.result);
+          if (this.maxLen === 0)
             this.$store.commit("SET_SUCCESS", "No data :(");
+          else {
+            this.searchResult = response.result;
+          }
         })
         .catch(e => {
           this.$store.commit("SET_ERROR", e || "Fetch data falied.");
@@ -73,10 +130,21 @@ export default {
         .finally(() => {
           this.$store.commit("TOGGLE_LOADING");
         });
-      this.searchQuery = "";
+    },
+
+    paginate(value) {
+      this.searchPage += value;
+      this.search();
     }
   }
 };
 </script>
-
-<style></style>
+<style lang="scss" scoped>
+.paginate {
+  display: flex;
+  justify-content: space-evenly;
+  button {
+    width: 30%;
+  }
+}
+</style>

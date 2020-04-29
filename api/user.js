@@ -15,12 +15,14 @@ export default {
       .post(`/api/search`, null, {
         params: {
           search: payload.search,
-          data: payload.data
+          data: payload.data,
+          page: payload.page,
+          num: payload.num
         }
       })
       .then(response => {
-        if (response.data.code === 200 && response.data.result.length !== 0)
-          return response.data.result;
+        if (response.data.code === 200 && response.data.dataLength !== 0)
+          return response.data;
         else throw new Error(response.data.err || "No data of your search.");
       });
   },
