@@ -32,10 +32,13 @@ export default {
         .userLogin({ email: payload.email, userPassword: payload.password })
         .then(response => {
           if (response.status === 200) {
-            const token = response.data.token;
+            const token = response.data.token,
+              role = response.data.role;
             commit("SET_TOKEN", token);
-            commit("SET_ROLE", response.data.role);
+            commit("SET_ROLE", role);
             localStorage.setItem("access_token", token);
+            localStorage.setItem("user_role", role);
+
             axios.defaults.headers.common = {
               Authorization: `Bearer ${getters.getTokenCredential}`
             };
@@ -59,10 +62,12 @@ export default {
         .then(response => {
           console.log(response);
           if (response.status === 200) {
-            const token = response.data.token;
+            const token = response.data.token,
+              role = response.data.role;
             commit("SET_TOKEN", token);
-            commit("SET_ROLE", response.data.role);
+            commit("SET_ROLE", role);
             localStorage.setItem("access_token", token);
+            localStorage.setItem("user_role", role);
             axios.defaults.headers.common = {
               Authorization: `Bearer ${getters.getTokenCredential}`
             };
