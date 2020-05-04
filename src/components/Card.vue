@@ -133,7 +133,7 @@ export default {
     getDate() {
       console.log("GET");
       if (this.data.checkUpDate)
-        return this.data.checkUpDate.replace("T", " ").replace(":00.000Z", "");
+        return new Date(this.data.checkUpDate).toString().split(" GMT")[0];
     },
     condition() {
       return this.role === "patient" || this.dataType === "patient";

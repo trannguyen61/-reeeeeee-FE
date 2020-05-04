@@ -33,9 +33,9 @@
           <card
             v-for="result in pres"
             :key="result.prescriptionID"
+            class="card-item"
             data-type="prescription"
             :data="result"
-            class="card-item"
             @click.native="show(result)"
           />
         </template>
@@ -47,7 +47,6 @@
 <script>
 import Card from "../components/Card";
 import SearchBar from "../components/SearchBar";
-import presApi from "../../api/prescription";
 
 export default {
   components: {
@@ -67,35 +66,22 @@ export default {
       pres: []
     };
   },
-  created() {
-    this.getPres();
-  },
   methods: {
-    getPres() {
-      presApi
-        .getPrescription()
-        .then(response => {
-          console.log(response);
-          this.pres = response;
-          if (response.length === 0)
-            this.$store.commit("SET_SUCCESS", "No data :(");
-        })
-        .catch(e => {
-          console.log(e);
-          this.$store.commit("SET_ERROR", e || "Something's wrong.");
-        });
-    },
     searchData(data) {
       this.pres = data;
     },
     show(pres) {
       console.log("CLICKED");
-      this.propList["Check-up date"] = pres.checkUpDate;
+      this.propList["Check-up date"] = new Date(
+        pres.checkUpDate
+      ).toDateString();
       this.propList["Doctor"] = pres.doctor;
       this.propList["Diagnosis"] = pres.diagnosis;
       this.propList["Medicine"] = pres.medicine;
       this.propList["Dose"] = pres.dose;
-      this.propList["Re-examination time"] = pres.reExaminationTime;
+      this.propList["Re-examination time"] = new Date(
+        pres.reExaminationTime
+      ).toDateString();
     }
   }
 };

@@ -11,6 +11,7 @@
         v-model="searchQuery"
         type="date"
         class="form__control"
+        @change="setDefault"
       />
 
       <input
@@ -19,6 +20,7 @@
         v-model="searchQuery"
         type="text"
         class="form__control"
+        @change="setDefault"
       />
 
       <button
@@ -35,37 +37,36 @@
     <slot name="card">
       <card
         v-for="result in searchResult"
-        :key="result.clinicID || result.formID || result.userID"
+        :key="
+          result.prescriptionID ||
+            result.clinicID ||
+            result.formID ||
+            result.userID
+        "
         :data="result"
         :data-type="searchSelect"
       />
     </slot>
 
-    <div v-show="searchResult.length !== 0" class="paginate">
-      <button
-        v-show="searchPage !== 0"
-        class="btn-group__link btn-group__link--filled"
-        @click="paginate(-1)"
-      >
-        Prev
-      </button>
-      <button
-        v-show="(searchPage + 1) * paginateNum < maxLen"
-        class="btn-group__link btn-group__link--filled"
-        @click="paginate(1)"
-      >
-        Next
-      </button>
-    </div>
+    <Paginate
+      v-show="searchResult"
+      :search-len="searchResult.length"
+      :search-page="searchPage"
+      :paginate-num="paginateNum"
+      :max-len="maxLen"
+      @paginate="paginate"
+    />
   </div>
 </template>
 
 <script>
 import Card from "./Card";
 import userApi from "../../api/user";
+import Paginate from "../components/Paginate";
+// import presApi from "../../api/prescription";
 
 export default {
-  components: { Card },
+  components: { Card, Paginate },
   props: {
     searchType: {
       type: String,
@@ -96,14 +97,21 @@ export default {
     searchSelect() {
       if (this.searchResult !== []) {
         this.searchQuery = "";
-        this.searchResult = [];
-        this.searchPage = 0;
-        this.maxLen = 0;
+        this.setDefault();
       }
     }
   },
+  created() {
+    if (this.defaultCard) this.search();
+  },
   methods: {
+    setDefault() {
+      this.searchResult = [];
+      this.searchPage = 0;
+      this.maxLen = 0;
+    },
     search() {
+      console.log(this.searchResult);
       this.$store.commit("TOGGLE_LOADING");
       userApi
         .searchData({
@@ -113,13 +121,13 @@ export default {
           num: this.paginateNum
         })
         .then(response => {
-          // console.log(response);
           this.maxLen = response.dataLength;
-
-          if (this.defaultCard) this.$emit("searchData", response.result);
           if (this.maxLen === 0)
             this.$store.commit("SET_SUCCESS", "No data :(");
-          else {
+          if (this.defaultCard) {
+            this.searchResult = response.result;
+            this.$emit("searchData", response.result);
+          } else {
             this.searchResult = response.result;
           }
         })
