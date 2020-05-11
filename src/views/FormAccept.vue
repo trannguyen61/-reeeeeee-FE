@@ -44,7 +44,7 @@ export default {
           this.dataFetched = true;
           console.log(this.cards);
         })
-        .catch(e => this.$store.commit("SET_ERROR", e))
+        .catch(e => this.$store.commit("SET_ERROR", e.response.data.message))
         .finally(() => {
           this.$store.commit("TOGGLE_LOADING");
         });

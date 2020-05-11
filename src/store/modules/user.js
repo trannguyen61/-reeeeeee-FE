@@ -47,7 +47,9 @@ export default {
         })
         .catch(e => {
           localStorage.removeItem("access_token");
-          commit("SET_ERROR", e || "Login falied.", { root: true });
+          commit("SET_ERROR", e.response.data.message || "Login falied.", {
+            root: true
+          });
         })
         .finally(() => {
           commit("TOGGLE_LOADING", { root: true });
@@ -76,7 +78,9 @@ export default {
         })
         .catch(e => {
           localStorage.removeItem("access_token");
-          commit("SET_ERROR", e || "Signup falied.", { root: true });
+          commit("SET_ERROR", e.response.data.message || "Signup falied.", {
+            root: true
+          });
         })
         .finally(() => {
           commit("TOGGLE_LOADING", { root: true });

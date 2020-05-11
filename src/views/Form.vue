@@ -111,8 +111,10 @@ export default {
           this.$store.commit("SET_SUCCESS", "Successfully submited!");
         })
         .catch(e => {
-          this.$store.commit("SET_ERROR", e || "Submit falied.");
-          console.log(e);
+          this.$store.commit(
+            "SET_ERROR",
+            e.response.data.message || "Submit falied."
+          );
         })
         .finally(() => {
           this.$store.commit("TOGGLE_LOADING");
@@ -126,7 +128,10 @@ export default {
           console.log(data);
         })
         .catch(e => {
-          this.$store.commit("SET_ERROR", e || "Fetch data falied.");
+          this.$store.commit(
+            "SET_ERROR",
+            e.response.data.message || "Fetch data falied."
+          );
         });
     },
     changeSelect() {

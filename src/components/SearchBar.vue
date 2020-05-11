@@ -132,7 +132,10 @@ export default {
           }
         })
         .catch(e => {
-          this.$store.commit("SET_ERROR", e || "Fetch data falied.");
+          this.$store.commit(
+            "SET_ERROR",
+            e.response.data.message || "Fetch data falied."
+          );
           console.log(e);
         })
         .finally(() => {

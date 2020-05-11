@@ -90,7 +90,12 @@ export default {
           console.log(res);
           this.$store.commit("SET_SUCCESS", "Successfully submited!");
         })
-        .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
+        .catch(e =>
+          this.$store.commit(
+            "SET_ERROR",
+            e.response.data.message || "Something's wrong."
+          )
+        );
     }
   }
 };
