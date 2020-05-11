@@ -32,10 +32,13 @@ global.axios.interceptors.response.use(
   },
   error => {
     nProgress.done();
+    // console.log(error.response);
     if (error.response.status === 401) {
       store.dispatch("userSignout");
-      router.push({ name: "Home" });
-      location.reload();
+      if (router.currentRoute.name !== "Home") {
+        router.push({ name: "Home" });
+        location.reload();
+      }
     }
     return Promise.reject(error);
   }
