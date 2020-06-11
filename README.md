@@ -29,6 +29,7 @@
 - [x] Paginate search results  
 - [x] Responsive  
 - [ ] User page  
+- [ ] Doctor page
 - [ ] Loại bỏ CDN  
 
 ## Project setup
