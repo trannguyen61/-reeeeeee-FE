@@ -1,56 +1,29 @@
 <template>
   <div class="card">
-    <div v-if="role === 'patient' || data.userID">
+    <div v-if="condition()">
       <div class="card__title">
-        {{
-          data.clinicID || data.formID
-            ? "ID: " + (data.clinicID ? data.clinicID : data.formID)
-            : "Email: " + data.email
-        }}
+        {{ dataObj[dataType].title }}
       </div>
       <hr noshade />
 
       <div class="card__section">
         <div class="card__section__title">
-          {{
-            data.clinicName
-              ? "Name: " + data.clinicName
-              : data.clinic
-              ? "ClinicID: " + data.clinic
-              : "Name: " + data.userName
-          }}
+          {{ dataObj[dataType].sectionTitle }}
         </div>
 
-        <div v-if="data.userID" class="card__section__title">
-          {{ "Medical history: " + data.medicalHistory }}
-        </div>
-
-        <div v-if="data.clinicID" class="card__section__text">
-          Address: {{ data.street + " " + data.district + " " + data.city }}
-        </div>
-        <div v-if="data.formID" class="card__section__text">
-          Resolved:
-          {{
-            data.resolved === null
-              ? "Pending"
-              : data.resolved
-              ? "Accepted"
-              : "Declined"
-          }}
-        </div>
-
-        <div class="card__section__text">
-          Description: {{ data.description || data.symptom }}
+        <div
+          v-for="text in dataObj[dataType].sectionText"
+          :key="text"
+          class="card__section__text"
+        >
+          {{ text }}
         </div>
       </div>
     </div>
 
     <div v-else>
       <div class="card__title">
-        {{
-          "Check-up Date: " +
-            data.checkUpDate.replace("T", " ").replace(":00.000Z", "")
-        }}
+        {{ "Check-up Date: " + getDate() }}
       </div>
 
       <hr noshade />
@@ -91,11 +64,57 @@ export default {
   props: {
     data: {
       type: Object
+    },
+    dataType: {
+      type: String,
+      default: ""
     }
   },
   computed: {
     role() {
       return this.$store.getters.getRole;
+    },
+    dataObj() {
+      return {
+        clinic: {
+          title: `Clinic ID: ${this.data.clinicID}`,
+          sectionTitle: `Clinic name: ${this.data.clinicName}`,
+          sectionText: [
+            `Address: ${this.data.street}, ${this.data.district}, ${this.data.city}`,
+            `Description: ${this.data.description}`
+          ]
+        },
+        form: {
+          title: `Form ID: ${this.data.formID}`,
+          sectionTitle: `Clinic ID: ${this.data.clinic}`,
+          sectionText: [
+            `Resolved: ${
+              this.data.resolved === null
+                ? "Pending"
+                : this.data.resolved
+                ? "Accepted"
+                : "Declined"
+            }`,
+            `Description: ${this.data.description}`
+          ]
+        },
+        patient: {
+          title: `Patient email: ${this.data.email}`,
+          sectionTitle: `Name: ${this.data.userName}`,
+          sectionText: [
+            `Medical history: ${this.data.medicalHistory}`,
+            `Symptom: ${this.data.symptom}`
+          ]
+        },
+        prescription: {
+          title: `Diagnosis: ${this.data.diagnosis}`,
+          sectionTitle: `Description: ${this.data.description}`,
+          sectionText: [
+            `Check-up date: ${this.getDate()}`,
+            `Clinic: ${this.data.clinic}`
+          ]
+        }
+      };
     }
   },
   methods: {
@@ -110,6 +129,14 @@ export default {
         .finally(() => {
           this.$emit("reloadCards");
         });
+    },
+    getDate() {
+      console.log("GET");
+      if (this.data.checkUpDate)
+        return new Date(this.data.checkUpDate).toString().split(" GMT")[0];
+    },
+    condition() {
+      return this.role === "patient" || this.dataType === "patient";
     }
   }
 };

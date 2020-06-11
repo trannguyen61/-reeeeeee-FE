@@ -53,47 +53,37 @@
         </div>
       </div>
 
-      <div class="list-card md-mauto md-mt30">
-        <SearchBar
-          :search-select="searchSelect"
-          :search-type="searchSelect === 'clinic' ? 'text' : 'date'"
-          @searchData="searchData"
-        >
-          <template slot="label">Search for clinic/form</template>
+      <SearchBar
+        :search-select="searchSelect"
+        :search-type="searchSelect === 'clinic' ? 'text' : 'date'"
+      >
+        <template slot="label">Search for clinic/form</template>
 
-          <template slot="option">
-            <div class="select-bar md-ml10">
-              <select
-                id="searchSelect"
-                v-model="searchSelect"
-                name="searchSelect"
-              >
-                <option value="clinic">Clinic</option>
-                <option value="form">Form</option>
-              </select>
-            </div>
-          </template>
-        </SearchBar>
-
-        <card
-          v-for="result in searchResult"
-          :key="result.clinicID || result.formID"
-          :data="result"
-        />
-      </div>
+        <template slot="option">
+          <div class="select-bar md-ml10">
+            <select
+              id="searchSelect"
+              v-model="searchSelect"
+              name="searchSelect"
+              @change="changeSelect"
+            >
+              <option value="clinic">Clinic</option>
+              <option value="form">Form</option>
+            </select>
+          </div>
+        </template>
+      </SearchBar>
     </div>
   </div>
 </template>
 
 <script>
-import Card from "../components/Card";
 import SearchBar from "../components/SearchBar";
 import formApi from "../../api/form";
 import userApi from "../../api/user";
 
 export default {
   components: {
-    Card,
     SearchBar
   },
   data() {
@@ -101,7 +91,6 @@ export default {
       clinic: "",
       date: "",
       description: "",
-      searchResult: [],
       clinicData: [],
       searchSelect: ""
     };
@@ -122,8 +111,10 @@ export default {
           this.$store.commit("SET_SUCCESS", "Successfully submited!");
         })
         .catch(e => {
-          this.$store.commit("SET_ERROR", e || "Submit falied.");
-          console.log(e);
+          this.$store.commit(
+            "SET_ERROR",
+            e.response.data.message || "Submit falied."
+          );
         })
         .finally(() => {
           this.$store.commit("TOGGLE_LOADING");
@@ -137,11 +128,18 @@ export default {
           console.log(data);
         })
         .catch(e => {
-          this.$store.commit("SET_ERROR", e || "Fetch data falied.");
+          this.$store.commit(
+            "SET_ERROR",
+            e.response.data.message || "Fetch data falied."
+          );
         });
     },
-    searchData(data) {
-      this.searchResult = data;
+    changeSelect() {
+      if (this.searchResult !== []) {
+        console.log(this.searchSelect);
+
+        this.searchResult = "";
+      }
     }
   }
 };

@@ -32,10 +32,13 @@ export default {
         .userLogin({ email: payload.email, userPassword: payload.password })
         .then(response => {
           if (response.status === 200) {
-            const token = response.data.token;
+            const token = response.data.token,
+              role = response.data.role;
             commit("SET_TOKEN", token);
-            commit("SET_ROLE", response.data.role);
+            commit("SET_ROLE", role);
             localStorage.setItem("access_token", token);
+            localStorage.setItem("user_role", role);
+
             axios.defaults.headers.common = {
               Authorization: `Bearer ${getters.getTokenCredential}`
             };
@@ -44,7 +47,9 @@ export default {
         })
         .catch(e => {
           localStorage.removeItem("access_token");
-          commit("SET_ERROR", e || "Login falied.", { root: true });
+          commit("SET_ERROR", e.response.data.message || "Login falied.", {
+            root: true
+          });
         })
         .finally(() => {
           commit("TOGGLE_LOADING", { root: true });
@@ -59,10 +64,12 @@ export default {
         .then(response => {
           console.log(response);
           if (response.status === 200) {
-            const token = response.data.token;
+            const token = response.data.token,
+              role = response.data.role;
             commit("SET_TOKEN", token);
-            commit("SET_ROLE", response.data.role);
+            commit("SET_ROLE", role);
             localStorage.setItem("access_token", token);
+            localStorage.setItem("user_role", role);
             axios.defaults.headers.common = {
               Authorization: `Bearer ${getters.getTokenCredential}`
             };
@@ -71,7 +78,9 @@ export default {
         })
         .catch(e => {
           localStorage.removeItem("access_token");
-          commit("SET_ERROR", e || "Signup falied.", { root: true });
+          commit("SET_ERROR", e.response.data.message || "Signup falied.", {
+            root: true
+          });
         })
         .finally(() => {
           commit("TOGGLE_LOADING", { root: true });
@@ -83,6 +92,7 @@ export default {
       commit("SET_TOKEN", "");
       commit("SET_ROLE", "");
       localStorage.removeItem("access_token");
+      localStorage.removeItem("role");
     }
   }
 };

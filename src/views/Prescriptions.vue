@@ -21,78 +21,67 @@
         </div>
       </div>
 
-      <div class="list-card md-mauto">
-        <label for="clinicSearch">Search for prescription</label>
+      <SearchBar
+        search-select="prescription"
+        search-type="text"
+        :default-card="true"
+        @searchData="searchData"
+      >
+        <template slot="label">Search for prescription</template>
 
-        <div class="list-card__search-bar">
-          <input
-            id="prescriptionSearch"
-            v-model="prescriptionSearch"
-            type="date"
-            class="form__control"
+        <template slot="card">
+          <card
+            v-for="result in pres"
+            :key="result.prescriptionID"
+            class="card-item"
+            data-type="prescription"
+            :data="result"
+            @click.native="show(result)"
           />
-
-          <button
-            id="searchButton"
-            data-testid="presSearchBtn"
-            class="btn-group__link btn-group__link--filled"
-            type="button"
-            @click="search()"
-          >
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-
-        <card
-          v-for="result in searchResult"
-          :key="result.prescription"
-          class="card-item"
-          @click.native="show(result)"
-        />
-      </div>
+        </template>
+      </SearchBar>
     </div>
   </div>
 </template>
 
 <script>
 import Card from "../components/Card";
-import presApi from "../../api/prescription";
+import SearchBar from "../components/SearchBar";
 
 export default {
   components: {
-    Card
+    Card,
+    SearchBar
   },
   data() {
     return {
       propList: {
-        Patient: "ABC",
+        "Check-up date": "ABC",
         Doctor: "XYZ",
         Diagnosis: "",
-        Medecine: "",
+        Medicine: "",
+        Dose: "",
         "Re-examination time": ""
       },
-      prescriptionSearch: "",
-      searchResult: []
+      pres: []
     };
   },
   methods: {
-    search() {
-      presApi
-        .getPrescription(this.prescriptionSearch)
-        .then(response => {
-          console.log(this.prescriptionSearch);
-          console.log(response);
-          this.searchResult = response;
-          if (response.length === 0)
-            this.$store.commit("SET_SUCCESS", "No data :(");
-        })
-        .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
-
-      this.prescriptionSearch = "";
+    searchData(data) {
+      this.pres = data;
     },
     show(pres) {
       console.log("CLICKED");
-      this.propList["Patient"] = pres.prescription;
+      this.propList["Check-up date"] = new Date(
+        pres.checkUpDate
+      ).toDateString();
+      this.propList["Doctor"] = pres.doctor;
+      this.propList["Diagnosis"] = pres.diagnosis;
+      this.propList["Medicine"] = pres.medicine;
+      this.propList["Dose"] = pres.dose;
+      this.propList["Re-examination time"] = new Date(
+        pres.reExaminationTime
+      ).toDateString();
     }
   }
 };
