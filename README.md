@@ -26,7 +26,7 @@
 - [x] Animation cho login home page  
 - [x] Refactor component  
 - [x] Refactor axios calls in store  
-- [ ] Paginate search results  
+- [x] Paginate search results  
 - [x] Responsive  
 - [ ] User page  
 - [ ] Loại bỏ CDN  
