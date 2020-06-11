@@ -10,18 +10,10 @@
           <hr noshade />
         </header>
 
-        <label for="patientInput">Patient</label>
+        <label for="formInput">Check-up form ID</label>
         <input
-          id="patientInput"
-          v-model="patient"
-          type="text"
-          class="form__control"
-        />
-
-        <label for="doctorInput">Doctor</label>
-        <input
-          id="doctorInput"
-          v-model="doctor"
+          id="formInput"
+          v-model="form"
           type="text"
           class="form__control"
         />
@@ -61,46 +53,34 @@
         </div>
       </div>
 
-      <div class="list-card md-mauto md-mt30">
-        <SearchBar @searchData="searchData">
-          <template slot="label">Search for patients</template>
-        </SearchBar>
-        <card
-          v-for="result in searchResult"
-          :key="result.userID"
-          :data="result"
-        />
-      </div>
+      <SearchBar>
+        <template slot="label">Search for patients</template>
+      </SearchBar>
     </div>
   </div>
 </template>
 
 <script>
-import Card from "../components/Card";
 import SearchBar from "../components/SearchBar";
 import presApi from "../../api/prescription";
 
 export default {
   components: {
-    Card,
     SearchBar
   },
   data() {
     return {
-      patient: "",
-      doctor: "",
+      form: "",
       diagnosis: "",
       medicine: "",
-      time: "",
-      searchResult: []
+      time: ""
     };
   },
   methods: {
     submitForm() {
       presApi
         .postPrescription({
-          patient: this.patient,
-          doctor: this.doctor,
+          form: this.form,
           diagnosis: this.diagnosis,
           medicine: this.medicine,
           time: this.time
@@ -110,13 +90,12 @@ export default {
           console.log(res);
           this.$store.commit("SET_SUCCESS", "Successfully submited!");
         })
-        .catch(e => this.$store.commit("SET_ERROR", e || "Something's wrong."));
-    },
-
-    searchData(data) {
-      console.log(data);
-      this.searchResult = data;
-      console.log(this.searchResult);
+        .catch(e =>
+          this.$store.commit(
+            "SET_ERROR",
+            e.response.data.message || "Something's wrong."
+          )
+        );
     }
   }
 };

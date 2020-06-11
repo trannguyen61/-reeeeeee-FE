@@ -15,20 +15,24 @@ export default {
       .post(`/api/search`, null, {
         params: {
           search: payload.search,
-          data: payload.data
+          data: payload.data,
+          page: payload.page,
+          num: payload.num
         }
       })
       .then(response => {
-        if (response.data.code === 200 && response.data.result.length !== 0)
-          return response.data.result;
-        else throw new Error(response.data.err || "No data of your search.");
+        console.log(response);
+        if (response.status === 200) {
+          console.log(response.data);
+          return response.data;
+        } else throw new Error(response.data.err || "No data of your search.");
       });
   },
 
   getClinics() {
     return axios.get("/api/search/clinics").then(response => {
       console.log(response);
-      if (response.data.code === 200 && response.data.result.length !== 0)
+      if (response.status === 200 && response.data.result.length !== 0)
         return response.data.result;
       else throw new Error(response.data.err || "No data of your search.");
     });

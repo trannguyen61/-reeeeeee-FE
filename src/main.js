@@ -32,6 +32,14 @@ global.axios.interceptors.response.use(
   },
   error => {
     nProgress.done();
+    // console.log(error.response);
+    if (error.response.status === 401) {
+      store.dispatch("userSignout");
+      if (router.currentRoute.name !== "Home") {
+        router.push({ name: "Home" });
+        location.reload();
+      }
+    }
     return Promise.reject(error);
   }
 );
@@ -39,10 +47,20 @@ global.axios.interceptors.response.use(
 Vue.config.productionTip = false;
 
 new Vue({
-  created() {
-    AOS.init();
-  },
   router,
   store,
+  created() {
+    AOS.init();
+    if (
+      localStorage.getItem("access_token") &&
+      localStorage.getItem("user_role")
+    ) {
+      this.$store.commit("SET_TOKEN", localStorage.getItem("access_token"));
+      this.$store.commit("SET_ROLE", localStorage.getItem("user_role"));
+      global.axios.defaults.headers.common = {
+        Authorization: `Bearer ${this.$store.getters.getTokenCredential}`
+      };
+    }
+  },
   render: h => h(App)
 }).$mount("#app");
